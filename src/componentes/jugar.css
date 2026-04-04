@@ -131,4 +131,10 @@
   display: flex;
   justify-content: center;
  }
+ .card {
+  width: 100%;
+ }
+ .card p {
+  font-size: 18px;
+ }
 }
