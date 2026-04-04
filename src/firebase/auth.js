@@ -109,10 +109,11 @@ export const borrarJugador = async (update) => {
 }
 
 export const crearPartidas = async (nuevoPartida) => {
+  console.log(nuevoPartida)
   const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
   try {
     await updateDoc(userDocRef, {
-      equipos: arrayUnion(...nuevoPartida)
+       equipos: arrayUnion(...JSON.parse(JSON.stringify(nuevoPartida)))
     });
     console.log('equipos agregado con exito')
   } catch (error) {

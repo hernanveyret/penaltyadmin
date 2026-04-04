@@ -42,15 +42,17 @@ useEffect(() => {
   console.log(equipos)
 },[equipos])
 
-
+/*
 const marcarGanador = async ({ ganadorId, perdedorId }) => {
+  console.log(ganadorId, perdedorId)
   const nuevosEquipos = equipos.map((equipo) => {
     const nuevosJugadores = equipo.jugadores.map((jugador) => {
-      if (jugador.id === ganadorId) {
+      console.log(jugador.id)
+      if (jugador.id == ganadorId) {
         return { ...jugador, estado: true }
       }
 
-      if (jugador.id === perdedorId) {
+      if (jugador.id == perdedorId) {
         return { ...jugador, estado: false }
       }
 
@@ -68,6 +70,36 @@ const marcarGanador = async ({ ganadorId, perdedorId }) => {
     await checkGanador(nuevosEquipos)    
   } catch (error) {
     console.log('error al marcar ganador')
+  }
+}
+*/
+
+const marcarGanador = async ({ ganadorId, perdedorId }) => {
+  try {
+    const nuevosEquipos = equipos.map((equipo) => {
+      // Aseguramos que jugadores sea un array
+      const jugadores = Array.isArray(equipo.jugadores) ? equipo.jugadores : []
+
+      // Filtramos cualquier elemento undefined y actualizamos el estado
+      const nuevosJugadores = jugadores
+        .filter(Boolean) // elimina jugadores undefined
+        .map((jugador) => {
+          if (jugador.id === ganadorId) return { ...jugador, estado: true }
+          if (jugador.id === perdedorId) return { ...jugador, estado: false }
+          return jugador
+        })
+
+      return { ...equipo, jugadores: nuevosJugadores }
+    })
+
+    // Actualizamos el state
+    setEquipos(nuevosEquipos)
+
+    // Llamamos a tu función checkGanador
+    await checkGanador(nuevosEquipos)
+
+  } catch (error) {
+    console.error('Error al marcar ganador:', error)
   }
 }
 
