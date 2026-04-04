@@ -1,0 +1,27 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh; /* ocupa toda la pantalla */
+  
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.spinner {
+  width: 80px; /* tamaño de la pelota */
+  height: 80px;
+  animation: girar 1s linear infinite; /* animación continua */
+}
+
+@keyframes girar {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

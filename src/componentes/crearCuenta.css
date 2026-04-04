@@ -1,0 +1,167 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+  background:#0f0f0f;
+  color:white;
+}
+
+/* CONTENEDOR GENERAL */
+
+.app-contenedor{
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+/* FORMULARIO */
+
+.formularioLogin{
+  width:100%;
+  max-width:420px;
+  background:#1a1a1a;
+  padding:35px;
+  border-radius:12px;
+  box-shadow:0 0 25px rgba(0,0,0,0.6);
+}
+
+/* TITULO */
+
+.formularioLogin h3{
+  text-align:center;
+  margin-bottom:25px;
+  font-size:22px;
+  color:#f2f2f2;
+}
+
+/* INPUTS */
+
+form input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #333;
+  background:#121212;
+  color:white;
+  font-size:14px;
+  transition:0.2s;
+}
+
+form input::placeholder{
+  color:#777;
+}
+
+form input:focus{
+  outline:none;
+  border:1px solid #009ee3;
+}
+
+.errorContraseña {
+    width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #ef4444;
+  background:#121212;
+  color:white;
+  font-size:14px;
+  transition:0.2s;
+}
+
+/* CONTENEDOR INPUT CONTRASEÑA */
+
+.input-contraseña{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+.input-contraseña input{
+  padding-right:45px;
+}
+
+/* BOTON OJO */
+
+.btn-cargar-login{
+  position:absolute;
+  right:8px;
+  top:7px;
+  border:none;
+  background:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.btn-cancelar {
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#ef4444;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+  margin-top:10px;
+}
+
+.btn-cancelar:hover {
+  background:#c03535;
+}
+.btn-cargar-login svg{
+  width:20px;
+  height:20px;
+  fill:#777;
+  transition:0.2s;
+}
+
+.btn-cargar-login:hover svg{
+  fill:#009ee3;
+}
+
+/* BOTON CREAR CUENTA */
+
+form button[type="submit"]{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#009ee3;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.2s;
+  margin-top:10px;
+}
+
+form button[type="submit"]:hover{
+  background:#0084c2;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:480px){
+
+  .formularioLogin{
+    padding:25px;
+  }
+
+  .formularioLogin h3{
+    font-size:20px;
+  }
+
+  form input{
+    font-size:13px;
+  }
+
+}

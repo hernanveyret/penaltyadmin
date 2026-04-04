@@ -1,0 +1,41 @@
+.contenedor-lista-jugadores {
+  width: 100%;
+  border-radius: 10px;
+  background-color: black;
+  padding: 10px;
+}
+.contenedor-lista-jugadores h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.card-lista {
+  width: 100%;
+  display: flex;
+  color: rgb(6, 189, 6);
+  border-bottom: 1px dotted grey;
+  margin-bottom: 5px;
+}
+.card-lista:hover {
+  color: grey;
+}
+.card-lista:active {
+  color: rgb(0, 174, 255);
+}
+.infoJugadores {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  align-items: center;
+  width: 80%;
+}
+.nav-btn-lista {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  gap: 10px;
+}
+.btn-lista-jugadores {
+  background: transparent;
+  border: none;
+}
