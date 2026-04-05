@@ -8,7 +8,6 @@ const CargarJugadores = ({ db, setDb}) => {
   const [ nombre, setNombre ] = useState('')
   const [ apellido, setApellido ] = useState('')
   const [ isLoader, setIsLoader ] = useState(false);
-
   
 const cargar = async (e) => {
   e.preventDefault();
@@ -43,10 +42,6 @@ const cargar = async (e) => {
   console.log('No se pudo cargar al jugador')
  }
 };
-
-  useEffect(() => {
-    db && console.log(db)
-  },[db])
 
   return (
     <div className="formularioLogin">

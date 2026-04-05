@@ -76,7 +76,6 @@ export const getData = (callback) => {
 }
 
 export const agregarJugador = async (  nuevoJugador ) => {
-  console.log(nuevoJugador)
   if(!'SS194bqzsNqVQqyWZVPm'){
     throw new error('S necesita el UID para agregar el producto');
   }
@@ -105,7 +104,6 @@ export const borrarJugador = async (update) => {
     console.error('Error al borrar el jugador: ', error);
     throw error
   }
-
 }
 
 export const crearPartidas = async (nuevoPartida) => {

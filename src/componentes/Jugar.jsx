@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { crearPartidas, borrarPartidas, checkGanador } from '../firebase/auth.js'
+import { crearPartidas, borrarPartidas, checkGanador, borrarJugador } from '../firebase/auth.js'
 import Loader from './Loader.jsx'
 import './jugar.css'
 
 const Jugar = ({ db, setDb }) => {
 const [ jugadores, setJugadores ] = useState([])
 const [ equipos, setEquipos ] = useState(db[0]?.equipos ? db[0].equipos : [] )
+const [ isLoader, setIsLoader ] = useState(false)
 
 useEffect(() => {
   if(db){
@@ -16,9 +17,6 @@ useEffect(() => {
 
 },[db])
 
-useEffect(() => {
-  console.log('equipos: ', equipos)
-},[equipos])
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
@@ -36,45 +34,13 @@ if(jugadores.length === 0) return
     setEquipos(nuevosEquipos)    
      await crearPartidas(nuevosEquipos)
      console.log('equipos cargados en la base de datos con exito')
-     //setIsLoader(false)
+     setIsLoader(false)
    } catch (error) {
-    //setIsLoader(false)
+    setIsLoader(false)
     console.log('No se pudo cargar al jugador')
    }
 
 }
-
-/*
-const marcarGanador = async ({ ganadorId, perdedorId }) => {
-  console.log(ganadorId, perdedorId)
-  const nuevosEquipos = equipos.map((equipo) => {
-    const nuevosJugadores = equipo.jugadores.map((jugador) => {
-      console.log(jugador.id)
-      if (jugador.id == ganadorId) {
-        return { ...jugador, estado: true }
-      }
-
-      if (jugador.id == perdedorId) {
-        return { ...jugador, estado: false }
-      }
-
-      return jugador
-    })
-
-    return {
-      ...equipo,
-      jugadores: nuevosJugadores
-    }
-
-  })
-  try {
-    setEquipos(nuevosEquipos)
-    await checkGanador(nuevosEquipos)    
-  } catch (error) {
-    console.log('error al marcar ganador')
-  }
-}
-*/
 
 const marcarGanador = async ({ ganadorId, perdedorId }) => {
   try {
@@ -106,35 +72,62 @@ const marcarGanador = async ({ ganadorId, perdedorId }) => {
 }
 
 const finalizarRonda = async () => {
-  console.log('Finalizar ronda')
-
-  const perdedores = equipos.flatMap(e => e.jugadores).filter(j => j.estado === false).map(j => j.id);
-
-  console.log('Lista de perdedores: ', perdedores)
-
+  setIsLoader(true)
+  const perdedores = equipos.flatMap(e => e.jugadores).filter(j => j.estado === false).map(j => j.id);  
+  const resetJugadores = jugadores.filter(j => !perdedores.includes(j.id))
   try {
     setEquipos([])
      await borrarPartidas()
-     console.log('se borraron todos los equipos')
-     //setIsLoader(false)
+     await borrarJugador(resetJugadores);
+     setIsLoader(false)
+    // console.log('se borraron todos los equipos')
    } catch (error) {
-    //setIsLoader(false)
+    setIsLoader(false)
     console.log('Error al borrar los equipos')
    }
 }
 
 return (
   <div className="contenedor-jugar">
-
+    { isLoader && <Loader /> }
     <h2>JUGAR</h2>
-    <button 
-      title='Crear equipos'
-      type='button'
-      className='btn-crear-equipos'
-      onClick={crearEquipos}
-    >
-      Crear equipos
-    </button>
+    { equipos.length > 8 
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>ELIMINATORIAS</h3>
+      :
+      equipos.length === 8 
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>OCTAVOS DE FINAL</h3>
+      :
+      equipos.length === 4 
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>CUARTOS FINAL</h3>
+      :
+      equipos.length === 2 
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>SEMI FINAL</h3>
+      :
+      equipos.length === 1
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>FINAL</h3>
+      :
+      <button 
+        title='Crear equipos'
+        type='button'
+        className='btn-crear-equipos'
+        onClick={crearEquipos}
+      >
+        Crear equipos
+      </button>  
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
     <section className='listadeequipos'>
       { equipos.map((equipo) => (

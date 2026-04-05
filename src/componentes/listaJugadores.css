@@ -3,10 +3,14 @@
   border-radius: 10px;
   background-color: black;
   padding: 10px;
+  
 }
 .contenedor-lista-jugadores h2 {
   text-align: center;
   margin-bottom: 10px;
+}
+.lista {
+  overflow: scroll;
 }
 .card-lista {
   width: 100%;
