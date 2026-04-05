@@ -28,7 +28,8 @@ header{
   background:#1b1d22;
   border-bottom:1px solid #1f2937;
   width: 100%;
-  position: relative;
+  position:sticky;
+  top: 0;
 }
 
 .nav-config {
@@ -55,6 +56,7 @@ main{
   justify-content:flex-start;
   align-items:center;
   padding:20px;
+  margin-bottom: 40px;
 }
 
 /* NAV inferior */
