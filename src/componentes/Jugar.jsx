@@ -107,6 +107,11 @@ const marcarGanador = async ({ ganadorId, perdedorId }) => {
 
 const finalizarRonda = async () => {
   console.log('Finalizar ronda')
+
+  const perdedores = equipos.flatMap(e => e.jugadores).filter(j => j.estado === false).map(j => j.id);
+
+  console.log('Lista de perdedores: ', perdedores)
+
   try {
     setEquipos([])
      await borrarPartidas()
