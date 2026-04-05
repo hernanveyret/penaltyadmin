@@ -144,8 +144,8 @@ return (
               <label key={jugador?.id || index}>
                 <span>
                   <p>
-                    {jugador?.apellido?.[0]?.toUpperCase() + jugador?.apellido?.slice(1)}{" "}
-                    {jugador?.nombre?.[0]?.toUpperCase() + jugador?.nombre?.slice(1)}
+                    {jugador?.apellido === '' ? '' : jugador?.apellido?.[0]?.toUpperCase() + jugador?.apellido?.slice(1)}{" "}
+                    {jugador?.nombre === '' ? '' : jugador?.nombre?.[0]?.toUpperCase() + jugador?.nombre?.slice(1)}
                   </p>
                   <input
                     className='check-jugador'

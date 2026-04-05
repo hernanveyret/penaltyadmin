@@ -15,8 +15,8 @@ const cargar = async (e) => {
   setIsLoader(true)
   const nuevoJugador = {
     id: Date.now(),
-    nombre: nombre.toLowerCase(),
-    apellido: apellido.toLowerCase(),
+    nombre: (nombre || '').toLowerCase(),
+    apellido: (apellido || '').toLowerCase(),
     estado:false
   };
 
