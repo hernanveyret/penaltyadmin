@@ -1,7 +1,7 @@
 .contenedor-jugar{
   width:100%;
   min-height:100vh;
-  background-image: url("img/chanchaVertical.jpg");
+  background-image: url("img/cancha.jpg");
   background-size: cover;      /* ocupa todo */
   background-position: center; /* centra la imagen */
   background-repeat: no-repeat;
