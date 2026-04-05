@@ -11,8 +11,14 @@ useEffect(() => {
   if(db){
     const filtro = db[0]?.jugadores
     setJugadores(filtro)
+    setEquipos(db[0]?.equipos)
   }
+
 },[db])
+
+useEffect(() => {
+  console.log('equipos: ', equipos)
+},[equipos])
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
@@ -37,10 +43,6 @@ if(jugadores.length === 0) return
    }
 
 }
-
-useEffect(() => {
-  console.log(equipos)
-},[equipos])
 
 /*
 const marcarGanador = async ({ ganadorId, perdedorId }) => {

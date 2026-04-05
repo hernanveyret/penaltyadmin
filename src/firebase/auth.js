@@ -109,7 +109,6 @@ export const borrarJugador = async (update) => {
 }
 
 export const crearPartidas = async (nuevoPartida) => {
-  console.log(nuevoPartida)
   const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
   try {
     await updateDoc(userDocRef, {
@@ -138,7 +137,6 @@ export const borrarPartidas = async () => {
 }
 
 export const checkGanador = async (update) => {
-  console.log(update)
   const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
   try {
     await updateDoc(userDocRef, {
