@@ -84,6 +84,7 @@ const Inicio = ({ db, setDb }) => {
           <button
             title='Jugar'
             type='button'
+            className='btn-jugar'
             onClick={() => {
               setIsListaDeJugadores(false);
               setIsCargarJugadores(false);
@@ -102,6 +103,12 @@ const Inicio = ({ db, setDb }) => {
             }}
           >
             Lista de jugadores
+          </button>
+          <button
+            title='Partidos finalizados'
+            type='button'
+          >
+            Partidos finalizados
           </button>
           <button
             type='button'

@@ -146,3 +146,24 @@ export const checkGanador = async (update) => {
     throw error
   }
 }
+
+export const agregarPartidosFinalizados = async (  partido ) => {
+  if(!'SS194bqzsNqVQqyWZVPm'){
+    throw new error('S necesita el UID para agregar el producto');
+  }
+
+  // Crear una referencia del documento del usuario logueado.
+  const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
+ try {
+  const guardar = {
+    jugadas : partido
+  }
+  await updateDoc(userDocRef, {
+    partidosFinalizados: arrayUnion(guardar)
+  });
+  console.log('Producto agregado con exito')
+ } catch (error) {
+  console.error('Error al cargar el producto: ', error);
+  throw error
+ }
+}

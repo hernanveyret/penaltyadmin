@@ -102,7 +102,21 @@ main{
   cursor:pointer;
   transition:0.2s;
 }
-
+.nav-abajo .btn-jugar {
+  flex:1;
+  margin:0 5px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background-color:#1D3B2E;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.nav-abajo .btn-jugar:hover {
+  background-color:#115E2A ;
+}
 @media (max-width: 767px ) {
   .inicio-contenedor {
     width: 100%;

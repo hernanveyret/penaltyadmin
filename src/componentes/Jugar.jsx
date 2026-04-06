@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { crearPartidas, borrarPartidas, checkGanador, borrarJugador } from '../firebase/auth.js'
+import { useState, useEffect, useRef } from 'react'
+import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados } from '../firebase/auth.js'
 import Loader from './Loader.jsx'
 import './jugar.css'
 
@@ -7,14 +7,15 @@ const Jugar = ({ db, setDb }) => {
 const [ jugadores, setJugadores ] = useState([])
 const [ equipos, setEquipos ] = useState(db[0]?.equipos ? db[0].equipos : [] )
 const [ isLoader, setIsLoader ] = useState(false)
+const [ juegosFinalizados, setJuegosFinalizados ] = useState(db[0]?.partidosFinalizados ? db[0]?.partidosFinalizados : [])
 
 useEffect(() => {
   if(db){
     const filtro = db[0]?.jugadores
     setJugadores(filtro)
     setEquipos(db[0]?.equipos)
+    setJuegosFinalizados(db[0]?.partidosFinalizados || [])
   }
-
 },[db])
 
 
@@ -25,7 +26,7 @@ if(jugadores.length === 0) return
 
   for (let i = 0; i < jugadores.length; i += 2) {
     nuevosEquipos.push({
-      equipo: nuevosEquipos.length + 1,
+      partido: nuevosEquipos.length + 1,
       jugadores: [jugadores[i], jugadores[i + 1]]
     })
   }
@@ -72,11 +73,14 @@ const marcarGanador = async ({ ganadorId, perdedorId }) => {
 }
 
 const finalizarRonda = async () => {
+  
+  setJuegosFinalizados(prev => [...prev, equipos]);
   setIsLoader(true)
   const perdedores = equipos.flatMap(e => e.jugadores).filter(j => j.estado === false).map(j => j.id);  
   const resetJugadores = jugadores.filter(j => !perdedores.includes(j.id))
   try {
     setEquipos([])
+    await agregarPartidosFinalizados(equipos)
      await borrarPartidas()
      await borrarJugador(resetJugadores);
      setIsLoader(false)
@@ -86,6 +90,10 @@ const finalizarRonda = async () => {
     console.log('Error al borrar los equipos')
    }
 }
+
+useEffect(() => {
+  juegosFinalizados && console.log(juegosFinalizados)
+},[juegosFinalizados])
 
 return (
   <div className="contenedor-jugar">
@@ -119,23 +127,15 @@ return (
       >
         Crear equipos
       </button>  
-    }
+    }    
     
-    
-    
-    
-    
-    
-    
-    
-
     <section className='listadeequipos'>
       { equipos.map((equipo) => (
 
-        <div className="card" key={equipo.equipo}>
+        <div className="card" key={equipo.equipo} >
           
           <div className="title-card">
-            <p>Equipo {equipo.equipo}</p>
+            <p>Partido {equipo.equipo}</p>
           </div>
           <div className='info-nombre'>
             { equipo.jugadores.map((jugador, index) => (
