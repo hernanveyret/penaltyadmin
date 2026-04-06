@@ -80,7 +80,7 @@ const finalizarRonda = async () => {
   const resetJugadores = jugadores.filter(j => !perdedores.includes(j.id))
   try {
     setEquipos([])
-    await agregarPartidosFinalizados(equipos)
+     await agregarPartidosFinalizados(equipos)
      await borrarPartidas()
      await borrarJugador(resetJugadores);
      setIsLoader(false)
@@ -91,9 +91,7 @@ const finalizarRonda = async () => {
    }
 }
 
-useEffect(() => {
-  juegosFinalizados && console.log(juegosFinalizados)
-},[juegosFinalizados])
+
 
 return (
   <div className="contenedor-jugar">
@@ -125,14 +123,14 @@ return (
         className='btn-crear-equipos'
         onClick={crearEquipos}
       >
-        Crear equipos
+        Crear partidos
       </button>  
     }    
     
     <section className='listadeequipos'>
-      { equipos.map((equipo) => (
+      { equipos.map((equipo, i) => (
 
-        <div className="card" key={equipo.equipo} >
+        <div className="card" key={i} >
           
           <div className="title-card">
             <p>Partido {equipo.equipo}</p>

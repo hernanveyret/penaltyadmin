@@ -1,0 +1,56 @@
+.contenedor-lista {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.cardSave {
+  width: 200px;
+  max-width: 600px;
+  margin: 8px auto;
+  background: linear-gradient(180deg, #0f3d2e, #0b2f23);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.cardSave p {
+  margin: 0;
+}
+
+.cardSave > p {
+  text-align: center;
+  padding: 6px 0;
+  font-size: 14px;
+  color: white;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.nombre {
+  display: flex;
+  flex-direction: column;
+}
+
+.nombre span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  color: white;
+  font-size: 14px;
+}
+
+.nombre span:nth-child(odd) {
+  background: rgba(255,255,255,0.06);
+}
+
+.nombre span:nth-child(even) {
+  background: rgba(0,0,0,0.15);
+}
+
+.nombre img {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+}

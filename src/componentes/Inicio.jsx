@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { cerrarSesion } from '../firebase/auth.js'
 import CargarJugadores from './CargarJugadores';
 import ListaJugadores from './ListaJugadores.jsx';
+import PartidosTerminados from './PartidosTerminados.jsx';
 import './inicio.css';
 import Jugar from './Jugar.jsx';
 
@@ -9,6 +10,7 @@ const Inicio = ({ db, setDb }) => {
   const [ isCargarJugadores, setIsCargarJugadores ] = useState(true);
   const [ isListaDeJugadores, setIsListaDeJugadores ] = useState(false);
   const [ isJugar, setIsJugar ] = useState(false);
+  const [ isPartidosterminados, setIsPartidosTerminados ] = useState(false);
   
   return (
     <div className='inicio-contenedor'>
@@ -68,12 +70,20 @@ const Inicio = ({ db, setDb }) => {
                 setDb={setDb}
               />
           }
+          {
+            isPartidosterminados &&
+              <PartidosTerminados 
+                db={db}
+                setDb={setDb}
+              />
+          }
        
         <nav className='nav-abajo'>
           <button
             title='Agregar jugadores'
             type='button'
             onClick={() => {
+              setIsPartidosTerminados(false);
               setIsJugar(false)
               setIsListaDeJugadores(false);
               setIsCargarJugadores(true);
@@ -86,6 +96,7 @@ const Inicio = ({ db, setDb }) => {
             type='button'
             className='btn-jugar'
             onClick={() => {
+              setIsPartidosTerminados(false);
               setIsListaDeJugadores(false);
               setIsCargarJugadores(false);
               setIsJugar(true)
@@ -97,6 +108,7 @@ const Inicio = ({ db, setDb }) => {
             title='Lista de jugadores'
             type='button'
             onClick={() => {
+              setIsPartidosTerminados(false);
               setIsJugar(false)
               setIsCargarJugadores(false);
               setIsListaDeJugadores(true);
@@ -107,6 +119,12 @@ const Inicio = ({ db, setDb }) => {
           <button
             title='Partidos finalizados'
             type='button'
+            onClick={() => {
+              setIsJugar(false)
+              setIsListaDeJugadores(false);
+              setIsCargarJugadores(false);
+              setIsPartidosTerminados(true);
+            }}
           >
             Partidos finalizados
           </button>
