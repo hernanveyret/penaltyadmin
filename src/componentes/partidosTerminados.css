@@ -1,14 +1,25 @@
-/* 1. Contenedor principal: Alineación horizontal de las rondas */
+/* 1. Contenedor principal: El "marco" visible con scroll en ambos sentidos */
 .bracket-container {
   display: flex;
   flex-direction: row;
-  align-items: center; /* Centra las columnas verticalmente entre sí */
-  gap: 10px; /* Espacio horizontal entre fases (32avos, 16avos, etc) */
-  padding: 50px;
+  align-items: flex-start; /* Alinea las columnas al techo */
+  gap: 30px;               /* Espacio horizontal entre rondas */
+  padding: 20px;
+  
+  /* Habilita scroll horizontal y vertical */
   overflow-x: auto;
-  min-height: 100vh;
-  background-color: #0b1a14; /* Fondo oscuro acorde a tu app */
-  overflow: scroll;
+  overflow-y: auto;
+  
+  /* Ajuste de altura para que no tape los botones inferiores */
+  width: 100%;
+  max-height: 75vh; 
+  
+  /* Fondo y estética */
+  background-color: #0b1a14;
+  border-radius: 12px;
+  
+  /* Suavizado para móviles */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 2. Cada columna de la fase */
@@ -16,15 +27,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 200px;
+  flex-shrink: 0;   /* Evita que las columnas se aplasten en horizontal */
+  min-width: 210px;
 }
 
+/* Título de ronda que se queda fijo arriba al hacer scroll vertical */
 .titulo-fase {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #0b1a14;
+  padding: 10px 0;
+  width: 100%;
   color: #00ffaa;
   text-transform: uppercase;
   font-size: 13px;
   letter-spacing: 2px;
-  margin-bottom: 30px;
   font-weight: bold;
   text-align: center;
 }
@@ -33,21 +51,16 @@
 .contenedor-lista-bracket {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 20px; /* Espacio base para la Ronda 1 */
+  justify-content: flex-start;
+  gap: 10px;        /* Espacio vertical de 10px entre partidos */
+  padding-bottom: 20px;
 }
 
-/* --- Lógica de escalonado tipo Fixture --- 
-   Esto hace que en cada ronda los partidos se separen más para alinearse con los anteriores */
-.columna-fase:nth-child(2) .contenedor-lista-bracket { gap: 100px; }
-.columna-fase:nth-child(3) .contenedor-lista-bracket { gap: 240px; }
-.columna-fase:nth-child(4) .contenedor-lista-bracket { gap: 480px; }
-
-/* 4. Estilos de tu Card (Mantenidos y protegidos de deformación) */
+/* 4. Estilos de tu Card (Protegidos de deformación) */
 .cardSave {
   width: 200px;
-  height: auto; /* Evita que se estire verticalmente */
-  flex-shrink: 0; /* Evita que se aplaste horizontalmente */
+  height: auto;     /* Evita que se estire verticalmente */
+  flex-shrink: 0;   /* Evita que se aplaste horizontalmente */
   background: linear-gradient(180deg, #0f3d2e, #0b2f23);
   border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 8px;
@@ -103,4 +116,19 @@
   width: 16px;
   height: 16px;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+}
+
+/* 5. Barras de scroll personalizadas (más estéticas) */
+.bracket-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.bracket-container::-webkit-scrollbar-thumb {
+  background: #00ffaa;
+  border-radius: 10px;
+}
+
+.bracket-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
