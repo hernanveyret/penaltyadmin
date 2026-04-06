@@ -1,57 +1,66 @@
-/* --- Nuevos estilos para la separación de bloques --- */
-
-.bloque-partidos {
-  margin-bottom: 30px;
-  width: 100%;
-}
-
-.titulo-bloque {
-  color: #00ffaa; /* Un verde neón que combina con tus hovers */
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  margin-left: 5px;
-  font-weight: bold;
-  opacity: 0.8;
-}
-
-.separador-bloque {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  margin: 40px 0 20px 0;
-  width: 100%;
-}
-
-/* --- Tus clases originales (sin cambios) --- */
-
-.contenedor-lista {
-  width: 100%;
+/* 1. Contenedor principal: Alineación horizontal de las rondas */
+.bracket-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  background-color: #0F452E;
-  border-radius: 10px;
-  padding: 10px; /* Agregué un poco de padding para que las cards no toquen el borde */
+  flex-direction: row;
+  align-items: center; /* Centra las columnas verticalmente entre sí */
+  gap: 10px; /* Espacio horizontal entre fases (32avos, 16avos, etc) */
+  padding: 50px;
+  overflow-x: auto;
+  min-height: 100vh;
+  background-color: #0b1a14; /* Fondo oscuro acorde a tu app */
+  overflow: scroll;
 }
 
+/* 2. Cada columna de la fase */
+.columna-fase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+}
+
+.titulo-fase {
+  color: #00ffaa;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 3. Contenedor interno de las cards */
+.contenedor-lista-bracket {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px; /* Espacio base para la Ronda 1 */
+}
+
+/* --- Lógica de escalonado tipo Fixture --- 
+   Esto hace que en cada ronda los partidos se separen más para alinearse con los anteriores */
+.columna-fase:nth-child(2) .contenedor-lista-bracket { gap: 100px; }
+.columna-fase:nth-child(3) .contenedor-lista-bracket { gap: 240px; }
+.columna-fase:nth-child(4) .contenedor-lista-bracket { gap: 480px; }
+
+/* 4. Estilos de tu Card (Mantenidos y protegidos de deformación) */
 .cardSave {
   width: 200px;
-  max-width: 600px;
-  margin: 8px auto;
+  height: auto; /* Evita que se estire verticalmente */
+  flex-shrink: 0; /* Evita que se aplaste horizontalmente */
   background: linear-gradient(180deg, #0f3d2e, #0b2f23);
-  border: 1px solid grey;
+  border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 8px;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   transition: all .25s ease;
 }
 
 .cardSave:hover {
   transform: translateY(-3px);
-  border: 1px solid rgba(0,255,170,0.35);
-  box-shadow: 0 6px 25px rgba(0,255,170,0.12);
+  border: 1px solid rgba(0,255,170,0.5);
+  box-shadow: 0 6px 20px rgba(0,255,170,0.15);
 }
 
 .cardSave p {
@@ -60,10 +69,11 @@
 
 .cardSave > p {
   text-align: center;
-  padding: 6px 0;
-  font-size: 14px;
-  color: white;
-  border-bottom: 1px solid grey;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #ccc;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .nombre {
@@ -75,21 +85,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
+  padding: 10px 12px;
   color: white;
   font-size: 14px;
 }
 
+/* Colores alternados para los nombres */
 .nombre span:nth-child(odd) {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.04);
 }
 
 .nombre span:nth-child(even) {
-  background: rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.1);
 }
 
 .nombre img {
   width: 16px;
   height: 16px;
-  margin-left: 8px;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
 }

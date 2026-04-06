@@ -20,17 +20,12 @@ console.log(gruposDePartidos);
 },[juegosFinalizados])
 
   return (
-  <div className="contendor-partidos-terminados">
-    <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>Partidos terminados</h3>
-
+  <div className="bracket-container">
     {juegosFinalizados && juegosFinalizados.map((j, index) => (
-      <div key={index} className="bloque-partidos">
-        {/* Si no es el primer bloque, mostramos un separador visual */}
-        {index > 0 && <div className="separador-bloque"></div>}
+      <div key={index} className="columna-fase">
+        <h3 className="titulo-fase">Ronda {index + 1}</h3>
         
-        <p className="titulo-bloque">Sesión de juego #{juegosFinalizados.length - index}</p>
-        
-        <div className="contenedor-lista">
+        <div className="contenedor-lista-bracket">
           {j.jugadas.map((p, i) => (
             <div className='cardSave' key={i}>
               <p>Partido #{p.partido}</p>
