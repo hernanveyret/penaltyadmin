@@ -1,3 +1,30 @@
+/* --- Nuevos estilos para la separación de bloques --- */
+
+.bloque-partidos {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.titulo-bloque {
+  color: #00ffaa; /* Un verde neón que combina con tus hovers */
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.separador-bloque {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  margin: 40px 0 20px 0;
+  width: 100%;
+}
+
+/* --- Tus clases originales (sin cambios) --- */
+
 .contenedor-lista {
   width: 100%;
   display: flex;
@@ -5,7 +32,9 @@
   gap: 10px;
   background-color: #0F452E;
   border-radius: 10px;
+  padding: 10px; /* Agregué un poco de padding para que las cards no toquen el borde */
 }
+
 .cardSave {
   width: 200px;
   max-width: 600px;
@@ -15,14 +44,16 @@
   border-radius: 8px;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  box-shadow:0 4px 18px rgba(0,0,0,0.4);
-  transition:all .25s ease;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  transition: all .25s ease;
 }
+
 .cardSave:hover {
-  transform:translateY(-3px);
-  border:1px solid rgba(0,255,170,0.35);
-  box-shadow:0 6px 25px rgba(0,255,170,0.12);
+  transform: translateY(-3px);
+  border: 1px solid rgba(0,255,170,0.35);
+  box-shadow: 0 6px 25px rgba(0,255,170,0.12);
 }
+
 .cardSave p {
   margin: 0;
 }
