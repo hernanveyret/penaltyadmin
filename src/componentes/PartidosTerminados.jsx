@@ -11,15 +11,15 @@ useEffect(() => {
     setJuegosFinalizados(db[0]?.partidosFinalizados || [])
   }
 },[db])
+
 let arbol = []
+
 useEffect(() => {
-  juegosFinalizados && console.log(juegosFinalizados)
   const gruposDePartidos = juegosFinalizados.map(j => j.jugadas);
 // Para saber cuántos hay en el primero:
 //console.log(gruposDePartidos);
 setConteoFaces(gruposDePartidos)
 },[juegosFinalizados])
-
 
   return (
   <div className="bracket-container">

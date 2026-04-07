@@ -11,6 +11,8 @@ const Inicio = ({ db, setDb }) => {
   const [ isListaDeJugadores, setIsListaDeJugadores ] = useState(false);
   const [ isJugar, setIsJugar ] = useState(false);
   const [ isPartidosterminados, setIsPartidosTerminados ] = useState(false);
+
+
   
   return (
     <div className='inicio-contenedor'>
