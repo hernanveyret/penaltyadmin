@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados } from '../firebase/auth.js'
 import Loader from './Loader.jsx'
 import './jugar.css'
-import e from 'cors'
 
 const Jugar = ({ db, setDb }) => {
 const [ jugadores, setJugadores ] = useState([])
@@ -10,8 +9,6 @@ const [ equipos, setEquipos ] = useState(db[0]?.equipos ? db[0].equipos : [] )
 const [ isLoader, setIsLoader ] = useState(false)
 const [ juegosFinalizados, setJuegosFinalizados ] = useState(db[0]?.partidosFinalizados ? db[0]?.partidosFinalizados : []);
 const [ cantidadDePartidos, setCantidadDePartidos ] = useState({});
-
-
 
 useEffect(() => {
   if(db){
