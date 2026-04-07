@@ -158,14 +158,10 @@ return (
         Crear partidos
       </button>  
     }    
-    
     <section className='listadeequipos'>
       { equipos.map((equipo, i) => (
-
-        <div className="card" key={i} 
-          
-        >
-          
+        <div className="card" key={i}          
+        >          
           <div className="title-card">
             <p>Partido {i+1}</p>
             <button
@@ -184,8 +180,16 @@ return (
                   <path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm485-75q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35Zm-285-85Z"/>
               </svg>
                 ): (
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm85-75q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35Zm115-85Z"/></svg>
-             ) }
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                height="24px" 
+                viewBox="0 -960 960 960" 
+                width="24px" 
+                fill="#EA3323">
+                  <path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm85-75q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35Zm115-85Z"/>
+              </svg>
+                ) 
+             }
               
             </button>
           </div>
@@ -198,7 +202,6 @@ return (
                     {jugador?.nombre === '' ? '' : jugador?.nombre?.[0]?.toUpperCase() + jugador?.nombre?.slice(1)}
                   </p>
                   <input
-
                     className='check-jugador'
                     type='checkbox'
                     name={`partido-${i+1}`}
@@ -238,13 +241,6 @@ return (
     </button>
   </div>
 )
-
 }
-
 export default Jugar;
 //name={`jugador-${equipo.equipo}-${index}`}
-//toggle off
-// <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm85-75q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35Zm115-85Z"/></svg>
-// toggle on
-// <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#75FB4C"><path d="M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm485-75q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35Zm-285-85Z"/></svg>
-
