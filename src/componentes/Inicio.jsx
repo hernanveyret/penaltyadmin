@@ -79,6 +79,7 @@ const Inicio = ({ db, setDb }) => {
           }
        
         <nav className='nav-abajo'>
+          <div className="contenedorMenu">
           <button
             title='Agregar jugadores'
             type='button'
@@ -134,6 +135,7 @@ const Inicio = ({ db, setDb }) => {
           >
             Resetear
           </button>
+          </div>
         </nav>
       </main>
       

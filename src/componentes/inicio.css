@@ -64,17 +64,26 @@ main{
   position:fixed;
   bottom:0;
   left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
+  width: 100%;
   padding:15px;
   background:#1b1d22;
   border-top:1px solid #1f2937;
   border-radius: 20px 20px 0 0;
 }
 
+/* menu scroll */
+.contenedorMenu {  
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  display: flex;
+  align-items: center;
+  scroll-behavior: smooth;
+}
 /* botones */
-.nav-abajo button{
+.contenedorMenu button{
   flex:1;
   margin:0 5px;
   padding:12px;
@@ -87,10 +96,10 @@ main{
   transition:0.2s;
 }
 
-.nav-abajo button:hover{
+.contenedorMenu button:hover{
   background:#0d9488;
 }
-.nav-abajo .btn-resetJuego {
+.contenedorMenu .btn-resetJuego {
   flex:1;
   margin:0 5px;
   padding:12px;
@@ -101,8 +110,9 @@ main{
   font-size:14px;
   cursor:pointer;
   transition:0.2s;
+  align-items: stretch;
 }
-.nav-abajo .btn-jugar {
+.contenedorMenu .btn-jugar {
   flex:1;
   margin:0 5px;
   padding:12px;
@@ -113,8 +123,9 @@ main{
   font-size:14px;
   cursor:pointer;
   transition:0.2s;
+  align-items: stretch;
 }
-.nav-abajo .btn-jugar:hover {
+.contenedorMenu .btn-jugar:hover {
   background-color:#115E2A ;
 }
 @media (max-width: 767px ) {
@@ -123,5 +134,8 @@ main{
   }
   main {
     width: 100%;
+  }
+  .contenedorMenu .btn-jugar, .contenedorMenu .btn-resetJuego {
+    min-height: 56px;
   }
 }
