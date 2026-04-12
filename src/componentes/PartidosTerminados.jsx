@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import './partidosTerminados.css';
 import pelota from '/img/pelota.png';
 const PartidosTerminados = ({ db, setDb }) => {
@@ -22,7 +23,11 @@ setConteoFaces(gruposDePartidos)
 },[juegosFinalizados])
 
   return (
+    
+
   <div className="bracket-container">
+    
+
     {juegosFinalizados && juegosFinalizados.map((j, index) => (
       <div key={index} className="columna-fase">
         <h3 className="titulo-fase">
@@ -58,7 +63,10 @@ setConteoFaces(gruposDePartidos)
         </div>
       </div>
     ))}
-  </div>
-);
+
+    </div>
+
+  )   
+ 
 };
 export default PartidosTerminados;

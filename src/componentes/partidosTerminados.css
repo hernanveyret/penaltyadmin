@@ -2,37 +2,29 @@
 .bracket-container {
   display: flex;
   flex-direction: row;
-  align-items: center; /* Centra las columnas verticalmente entre sí */
-  
+  align-items: center;
+
   padding: 5px;
-  overflow-x: auto;
-  min-height: 100vh;
-  background-color: #0b1a14; /* Fondo oscuro acorde a tu app */
- 
-  /* Habilita scroll horizontal y vertical */
+
+  width: 100%;
+  min-height: 100dvh;
+
   overflow-x: auto;
   overflow-y: auto;
-  
-  /* Ajuste de altura para que no tape los botones inferiores */
-  width: 100%;
-  min-height: 100dvh; 
-  
-  /* Fondo y estética */
+
   background-color: #0b1a14;
   border-radius: 12px;
-  
-  /* Suavizado para móviles */
-  -webkit-overflow-scrolling: touch;
 
+  -webkit-overflow-scrolling: touch;
 }
 
-/* 2. Cada columna de la fase */
+
+/* 2. Cada columna de fase */
 .columna-fase {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 160px;
- 
 }
 
 .titulo-fase {
@@ -45,33 +37,40 @@
   text-align: center;
 }
 
-/* 3. Contenedor interno de las cards */
+
+/* 3. Contenedor interno de los partidos */
 .contenedor-lista-bracket {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px; /* Espacio base para la Ronda 1 */
+  gap: 20px;
 }
 
-/* --- Lógica de escalonado tipo Fixture --- 
-   Esto hace que en cada ronda los partidos se separen más para alinearse con los anteriores */
-.columna-fase:nth-child(2) .contenedor-lista-bracket { gap: 100px; }
-.columna-fase:nth-child(3) .contenedor-lista-bracket { gap: 240px; }
-.columna-fase:nth-child(4) .contenedor-lista-bracket { gap: 480px; }
 
-/* 4. Estilos de tu Card (Mantenidos y protegidos de deformación) */
+/* Escalonado del fixture */
+.columna-fase:nth-child(2) .contenedor-lista-bracket { gap: 150px; }
+.columna-fase:nth-child(3) .contenedor-lista-bracket { gap: 410px; }
+.columna-fase:nth-child(4) .contenedor-lista-bracket { gap: 880px; }
+
+
+/* 4. Card del partido */
 .cardSave {
   width: 150px;
-  height: auto; /* Evita que se estire verticalmente */
-  flex-shrink: 0; /* Evita que se aplaste horizontalmente */
+  height: auto;
+  flex-shrink: 0;
+
   background: linear-gradient(180deg, #0f3d2e, #0b2f23);
   border: 1px solid rgba(128, 128, 128, 0.5);
   border-radius: 8px;
+
   overflow: hidden;
   font-family: Arial, sans-serif;
+
   box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   transition: all .25s ease;
 
+  position: relative;
+  overflow: visible;
 }
 
 .cardSave:hover {
@@ -80,11 +79,10 @@
   box-shadow: 0 6px 20px rgba(0,255,170,0.15);
 }
 
-.cardSave p {
-  margin: 0;
-}
 
+/* título del partido */
 .cardSave > p {
+  margin: 0;
   text-align: center;
   padding: 8px 0;
   font-size: 13px;
@@ -92,6 +90,59 @@
   border-bottom: 1px solid rgba(128, 128, 128, 0.3);
   background: rgba(0, 0, 0, 0.2);
 }
+
+
+/* =========================
+   LINEAS DEL BRACKET
+========================= */
+
+
+/* línea horizontal hacia la siguiente ronda */
+.cardSave::after {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  width: 30px;
+  height: 2px;
+  background: #00ffc3;
+}
+
+
+/* línea vertical que baja (partidos impares) */
+.cardSave:nth-child(odd)::before {
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  width: 2px;
+  height: 60px;
+  background: #00ffc3;
+}
+
+
+/* línea vertical que sube (partidos pares) */
+.cardSave:nth-child(even)::before {
+  content: "";
+  position: absolute;
+  right: -30px;
+  bottom: 50%;
+  width: 2px;
+  height: 60px;
+  background: #00ffc3;
+}
+
+
+/* ocultar líneas en la última columna */
+.columna-fase:last-child .cardSave::after,
+.columna-fase:last-child .cardSave::before {
+  display: none;
+}
+
+
+/* =========================
+   NOMBRES DE JUGADORES
+========================= */
 
 .nombre {
   display: flex;
@@ -107,7 +158,6 @@
   font-size: 13px;
 }
 
-/* Colores alternados para los nombres */
 .nombre span:nth-child(odd) {
   background: rgba(255,255,255,0.04);
 }

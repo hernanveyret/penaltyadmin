@@ -129,6 +129,9 @@ main{
 .contenedorMenu .btn-jugar:hover {
   background-color:#115E2A ;
 }
+.contenedorMenu .btn-resetJuego:hover {
+  background:#b13232;  
+}
 @media (max-width: 767px ) {
   .inicio-contenedor {
     width: 100%;

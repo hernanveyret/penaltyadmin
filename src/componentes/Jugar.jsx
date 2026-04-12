@@ -30,6 +30,10 @@ useEffect(() => {
   }
 },[])
 
+useEffect(() => {
+  equipos && console.log(equipos)
+},[equipos])
+
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
@@ -228,14 +232,24 @@ return (
         </div>
       ))}
     </section>
-      <button 
-      title='Finalizar partida'
-      type='button'
-      className='btn-crear-equipos'
-      onClick={finalizarRonda}
-    >
-      Finalizar ronda
-    </button>
+    <div className="contenedor-btn-jugar">
+        <button
+          title='Boton eliminar ronda'
+          type='button'
+          className='btn-reset-jugada'
+         
+        >
+          Anular ronda
+        </button>
+        <button 
+        title='Finalizar partida'
+        type='button'
+        className='btn-crear-equipos'
+        onClick={finalizarRonda}
+        >
+        Finalizar ronda
+      </button>
+    </div>
   </div>
 )
 }

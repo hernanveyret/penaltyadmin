@@ -110,6 +110,21 @@
   accent-color:#00ffa6;
   cursor:pointer;
 }
+.btn-reset-jugada {
+  width: auto;
+  margin:0 5px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+   background:#ef4444;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.btn-reset-jugada:hover {  
+   background:#b13232;  
+}
 
 .btn-crear-equipos {
   margin:0 5px;
@@ -133,6 +148,13 @@
   border: none;
 }
 
+.contenedor-btn-jugar{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 @media (max-width: 767px ) {
  .listadeequipos {
   display: flex;
