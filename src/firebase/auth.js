@@ -134,6 +134,21 @@ export const borrarPartidas = async () => {
   }
 }
 
+export const borrarJuegosFinalizados = async () => {
+  const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
+  try {
+    await updateDoc(userDocRef, {
+      partidosFinalizados: []
+    });
+
+    console.log('equipos borrados')
+
+  } catch (error) {
+    console.error('Error al borrar los equipos: ', error);
+    throw error
+  }
+}
+
 export const checkGanador = async (update) => {
   const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
   try {

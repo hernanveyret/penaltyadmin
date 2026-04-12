@@ -37,7 +37,10 @@ useEffect(() => {
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
-
+if(jugadores.length % 2 !== 0) {
+  alert('Faltan jugadores');
+  return
+}
   const nuevosEquipos = []
 
   for (let i = 0; i < jugadores.length; i += 2) {

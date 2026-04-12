@@ -16,6 +16,7 @@
   border-radius: 12px;
 
   -webkit-overflow-scrolling: touch;
+
 }
 
 
@@ -171,3 +172,4 @@
   height: 16px;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
 }
+

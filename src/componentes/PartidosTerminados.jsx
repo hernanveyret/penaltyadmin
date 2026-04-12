@@ -13,6 +13,10 @@ useEffect(() => {
   }
 },[db])
 
+useEffect(() => {
+  juegosFinalizados && console.log(juegosFinalizados)
+},[juegosFinalizados])
+
 let arbol = []
 
 useEffect(() => {
@@ -50,11 +54,11 @@ setConteoFaces(gruposDePartidos)
               <p>Partido #{p.partido}</p>
               <div className='nombre'>
                 <span>
-                  <p>{p.jugadores[0].nombre}</p>
+                  <p>{p.jugadores[0].nombre ? p.jugadores[0].nombre : 'NN'}</p>
                   {p.jugadores[0].estado ? <img src={pelota} alt='Pelota' /> : ''}
                 </span>
                 <span>
-                  <p>{p.jugadores[1].nombre}</p>
+                  <p>{p.jugadores[1].nombre ? p.jugadores[1].nombre : 'NN'}</p>
                   {p.jugadores[1].estado ? <img src={pelota} alt='Pelota' /> : ''}
                 </span>
               </div>

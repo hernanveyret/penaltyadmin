@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cerrarSesion } from '../firebase/auth.js'
+import { cerrarSesion, borrarJuegosFinalizados } from '../firebase/auth.js'
 import CargarJugadores from './CargarJugadores';
 import ListaJugadores from './ListaJugadores.jsx';
 import PartidosTerminados from './PartidosTerminados.jsx';
@@ -134,6 +134,10 @@ const Inicio = ({ db, setDb }) => {
           <button
             type='button'
             className='btn-resetJuego'
+            onClick={() => {
+              borrarJuegosFinalizados()
+              db && console.log(db[0]?.partidosFinalizados)
+            }}
           >
             Resetear
           </button>
