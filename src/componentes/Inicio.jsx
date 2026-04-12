@@ -17,7 +17,7 @@ const Inicio = ({ db, setDb }) => {
   return (
     <div className='inicio-contenedor'>
       <header>
-        <h1>PENALTY</h1>
+        <h1>PENALES 11 FC</h1>
         <div className="nav-config">
           <button
             type='button'
