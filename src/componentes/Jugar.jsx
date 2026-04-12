@@ -34,6 +34,44 @@ useEffect(() => {
   equipos && console.log(equipos)
 },[equipos])
 
+const crearEnganchados = async () => {  
+  const cantidadJugadores = jugadores.length
+  console.log('cantidad de jugadores: ',cantidadJugadores )
+  const mitadDeJugadores = cantidadJugadores / 2
+  console.log('mitad de jugadores: ',mitadDeJugadores)
+  const stepUno = jugadores.slice(0,mitadDeJugadores)
+  const stepDos = jugadores.slice(mitadDeJugadores, cantidadJugadores)
+  console.log('step Uno:',stepUno)
+  console.log('step dos:', stepDos )
+
+  let enganchados = [];
+  if( stepUno > stepDos){
+    for(let i=0; i < stepUno.length; i++){
+      enganchados.push({
+        partido: enganchados.length + 1,
+        jugadores: [stepUno[i], stepDos[i]]
+      })
+    }
+  }else{
+    for(let i=0; i < stepDos.length; i++){
+      enganchados.push({
+        partido: enganchados.length + 1,
+        jugadores: [stepUno[i], stepDos[i]]
+      })
+    }
+  }
+  console.log('jugadores enganchados + ganadores: ', enganchados)
+  try {
+    setEquipos(enganchados)    
+     await crearPartidas(enganchados)
+     console.log('equipos cargados en la base de datos con exito')
+     setIsLoader(false)
+   } catch (error) {
+    setIsLoader(false)
+    console.log('No se pudo cargar al jugador')
+   }
+}
+
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
@@ -118,6 +156,7 @@ const finalizarRonda = async () => {
    }
 }
 
+
 const bloquearPartido = (partido) => {
   const inputs = document.querySelectorAll(`[name^="${partido}"]`)
   inputs.forEach(check => {
@@ -152,7 +191,8 @@ return (
       equipos.length === 1
       ?
       <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>FINAL</h3>
-      :
+      : (
+        <div className='nav-btn-crearPartidas'>
       <button 
         title='Crear equipos'
         type='button'
@@ -160,7 +200,20 @@ return (
         onClick={crearEquipos}
       >
         Crear partidos
-      </button>  
+      </button> 
+      <button
+        title='Crear Repechaje'
+        type='button'
+        className='btn-crear-equiposEnganchados'      
+        onClick={() => { 
+          crearEnganchados()
+        }}
+      >
+        Enganchados
+      </button>
+      </div>
+      )
+       
     }    
     <section className='listadeequipos'>
       { equipos.map((equipo, i) => (
@@ -251,7 +304,7 @@ return (
         onClick={finalizarRonda}
         >
         Finalizar ronda
-      </button>
+      </button>      
     </div>
   </div>
 )
