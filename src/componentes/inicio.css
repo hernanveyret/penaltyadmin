@@ -142,4 +142,7 @@ main{
   .contenedorMenu .btn-jugar, .contenedorMenu .btn-resetJuego {
     min-height: 56px;
   }
+  h1 {
+    font-size: 25px !important;
+  }
 }
