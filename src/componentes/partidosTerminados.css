@@ -48,10 +48,6 @@
 }
 
 
-/* Escalonado del fixture */
-.columna-fase:nth-child(2) .contenedor-lista-bracket { gap: 150px; }
-.columna-fase:nth-child(3) .contenedor-lista-bracket { gap: 410px; }
-.columna-fase:nth-child(4) .contenedor-lista-bracket { gap: 880px; }
 
 
 /* 4. Card del partido */

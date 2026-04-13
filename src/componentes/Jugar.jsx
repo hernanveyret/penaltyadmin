@@ -9,6 +9,8 @@ const [ equipos, setEquipos ] = useState(db[0]?.equipos ? db[0].equipos : [] )
 const [ isLoader, setIsLoader ] = useState(false)
 const [ juegosFinalizados, setJuegosFinalizados ] = useState(db[0]?.partidosFinalizados ? db[0]?.partidosFinalizados : []);
 const [ cantidadDePartidos, setCantidadDePartidos ] = useState({});
+const [ tituloEnganchados, setTituloEnganchados ] = useState('')
+const [ ConfirmAnular, setIsConfirmAnular ] = useState(false)
 
 useEffect(() => {
   if(db){
@@ -29,12 +31,6 @@ useEffect(() => {
   setCantidadDePartidos(estadoInicial)  
   }
 },[])
-
-useEffect(() => {
-  equipos && console.log(equipos)
-},[equipos])
-
-
 
 const crearEnganchados = async () => {  
   const cantidadJugadores = jugadores.length
@@ -97,10 +93,41 @@ if(jugadores.length % 2 !== 0) {
 
 }
 
+const ConfirmarAnularPartidos = ({setIsConfirmAnular }) => {
+  setTimeout(() => {
+    const animacionCard = document.getElementById('card-in-out')
+  },1500)
+  return (
+    <div className='contenedor-confir-borrar'>
+      <div className='card-confirm' id='card-in-out'>
+        <h3>¿ Desea anular los partidos ?</h3>
+        <div className='btn-confirm'>
+        <button
+          onClick={() => { 
+            anularPartidos()
+            setIsConfirmAnular(false)
+          }}
+        >SI</button>
+        <button
+          onClick={() => { 
+            const animacionCard = document.getElementById('card-in-out')
+            animacionCard.classList.add('animacion-salida')
+            setTimeout(() => {
+              
+              setIsConfirmAnular(false);
+            },50)          
+          }}
+        >NO</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const anularPartidos = async () => {
-  console.log('click')
+  
   try {
-    console.log('click 2')
+    
     setEquipos([])
     await borrarPartidas();
     console.log('Partidas anuladas')
@@ -179,6 +206,7 @@ const bloquearPartido = (partido) => {
 return (
   <div className="contenedor-jugar">
     { isLoader && <Loader /> }
+    {  ConfirmAnular && <ConfirmarAnularPartidos setIsConfirmAnular={setIsConfirmAnular}/>  }
     <h2>JUGAR</h2>
     { equipos.length > 8 
       ?
@@ -302,7 +330,8 @@ return (
           type='button'
           className='btn-reset-jugada'
           onClick={() => {
-            anularPartidos()
+            //anularPartidos()
+            setIsConfirmAnular(true)
           }}
         >
           Anular ronda

@@ -26,51 +26,74 @@ useEffect(() => {
 setConteoFaces(gruposDePartidos)
 },[juegosFinalizados])
 
-  return (
-    
+const BASE = 20;
 
+return (
   <div className="bracket-container">
-    
 
-    {juegosFinalizados && juegosFinalizados.map((j, index) => (
-      <div key={index} className="columna-fase">
-        <h3 className="titulo-fase">
-          { 
-            conteoFaces?.[index]?.length === 1 ? 
-            'Final' : 
-            conteoFaces?.[index]?.length === 2 ?
-            'Semi final' :
-            conteoFaces?.[index]?.length === 4 ?
-            'Cuartos de final' :
-            conteoFaces?.[index]?.length === 8 ?
-            'Octavos de final' :
-            `Eliminatorias ${index+1}` 
-          }
-        </h3>
-        
-        <div className="contenedor-lista-bracket">
-          {j.jugadas.map((p, i) => (
-            <div className='cardSave' key={i}>
-              <p>Partido #{p.partido}</p>
-              <div className='nombre'>
-                <span>
-                  <p>{p.jugadores[0].nombre ? p.jugadores[0].nombre : 'NN'}</p>
-                  {p.jugadores[0].estado ? <img src={pelota} alt='Pelota' /> : ''}
-                </span>
-                <span>
-                  <p>{p.jugadores[1].nombre ? p.jugadores[1].nombre : 'NN'}</p>
-                  {p.jugadores[1].estado ? <img src={pelota} alt='Pelota' /> : ''}
-                </span>
+    {juegosFinalizados && juegosFinalizados.map((j, index) => {
+
+      const gap = BASE * (2 ** index)
+      const marginTop = index === 0 ? 0 : BASE * (2 ** (index - 1))
+
+      return (
+        <div key={index} className="columna-fase">
+
+          <h3 className="titulo-fase">
+            {
+              conteoFaces?.[index]?.length === 1 ?
+              'Final' :
+              conteoFaces?.[index]?.length === 2 ?
+              'Semi final' :
+              conteoFaces?.[index]?.length === 4 ?
+              'Cuartos de final' :
+              conteoFaces?.[index]?.length === 8 ?
+              'Octavos de final' :
+              `Eliminatorias ${index+1}`
+            }
+          </h3>
+
+          <div
+            className="contenedor-lista-bracket"
+            style={{
+              gap: `${gap}px`,
+              marginTop: `${marginTop}px`
+            }}
+          >
+            {j.jugadas.map((p, i) => (
+              <div className="cardSave" key={i}>
+
+                <p>Partido #{p.partido}</p>
+
+                <div className="nombre">
+
+                  <span>
+                    <p>{p.jugadores[0].nombre || 'NN'}</p>
+                    {p.jugadores[0].estado && (
+                      <img src={pelota} alt="Pelota"/>
+                    )}
+                  </span>
+
+                  <span>
+                    <p>{p.jugadores[1].nombre || 'NN'}</p>
+                    {p.jugadores[1].estado && (
+                      <img src={pelota} alt="Pelota"/>
+                    )}
+                  </span>
+
+                </div>
+
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
-      </div>
-    ))}
+      )
 
-    </div>
+    })}
 
-  )   
+  </div>
+)
  
 };
 export default PartidosTerminados;
