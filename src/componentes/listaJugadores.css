@@ -9,9 +9,7 @@
   text-align: center;
   margin-bottom: 10px;
 }
-.lista {
-  
-}
+
 .card-lista {
   width: 100%;
   display: flex;
@@ -42,4 +40,88 @@
 .btn-lista-jugadores {
   background: transparent;
   border: none;
+}
+
+.contenedor-confir-borrar {
+  position: fixed;
+  width: 100%;
+  height: 100dvh;
+  background-color: rgba(255, 255, 255, 0.123);
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+.card-confirm {
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  gap: 10px;
+  backdrop-filter: blur(5px);
+  background-color: rgba(6, 165, 6, 0.411);
+  animation: animacion 0.4s ease-out forwards;
+  transition: animacion .5s ease-in-out;
+  text-shadow: 2px 2px 4px black;
+}
+.btn-confirm {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 50px;
+}
+.btn-confirm button {
+  width: 50px;
+  margin:0 5px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#14b8a6; 
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.2s;
+  text-shadow: 2px 2px 2px black;
+}
+.btn-confirm button:hover {
+  background:#0d9488;
+}
+@keyframes animacion {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(85px);
+    opacity: 1;
+  }
+}
+@keyframes animacion-salida {
+  0% {
+    transform: translateY(85px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.animacion-salida {
+  animation: animacion-salida 0.4s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+  .card-confirm {
+    width: 90%;
+    text-align: center;
+    font-size: 14px;
+  }
+  .card-lista {
+    margin-bottom: 15px;
+  }
 }

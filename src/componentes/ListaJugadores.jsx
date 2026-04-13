@@ -6,6 +6,8 @@ import './listaJugadores.css'
 const ListaJugadores = ({ db, setDb }) => {
 const [ jugadores, setJugadores ] = useState([])
 const [ isLoader, setIsLoader ] = useState(false)
+const [ ConfirmBorrar, setIsConfirmBorrar ] = useState(false)
+const [ id, setId ] = useState('')
 
 useEffect(() => {
   setIsLoader(true)
@@ -15,6 +17,37 @@ if(db && db.length > 0 ){
   setIsLoader(false)
 }
 },[db])
+
+const ConfirmarBorrarJugador = ({setIsConfirmBorrar, id, setId }) => {
+  setTimeout(() => {
+    const animacionCard = document.getElementById('card-in-out')
+  },1500)
+  return (
+    <div className='contenedor-confir-borrar'>
+      <div className='card-confirm' id='card-in-out'>
+        <h3>¿ Desea borrar al jugador {id.nombre} ?</h3>
+        <div className='btn-confirm'>
+        <button
+          onClick={() => { 
+            borrarJugadores(id.id);
+            setIsConfirmBorrar(false)
+          }}
+        >SI</button>
+        <button
+          onClick={() => { 
+            const animacionCard = document.getElementById('card-in-out')
+            animacionCard.classList.add('animacion-salida')
+            setTimeout(() => {
+              setId('')
+              setIsConfirmBorrar(false);
+            },50)          
+          }}
+        >NO</button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const borrarJugadores = async (id) => {
   console.log('Borrar jugador: ', id)
@@ -36,6 +69,14 @@ const editarJugador = (id) => {
   return (
     <div className="contenedor-lista-jugadores">
       { isLoader && <Loader /> }
+      {
+        ConfirmBorrar &&
+          <ConfirmarBorrarJugador 
+            id={id}
+            setId={setId}
+            setIsConfirmBorrar={setIsConfirmBorrar}
+          />
+      }
       <h2>Lista de jugadores</h2>
       <div className="lista">
         { 
@@ -60,7 +101,15 @@ const editarJugador = (id) => {
                     title='Borrar jugadore'
                     type='button'
                     className='btn-lista-jugadores'
-                    onClick={() => borrarJugadores(j.id)}
+                    onClick={() => {
+                      //setId(j.id)
+                      setId({
+                        id: j.id,
+                        nombre : `${j.nombre} ${j.apellido}`
+                      })
+                      setIsConfirmBorrar(true)
+                      //borrarJugadores(j.id)
+                    }}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#EA3323"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
                   </button>  

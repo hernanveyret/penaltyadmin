@@ -34,16 +34,14 @@ useEffect(() => {
   equipos && console.log(equipos)
 },[equipos])
 
+
+
 const crearEnganchados = async () => {  
   const cantidadJugadores = jugadores.length
-  console.log('cantidad de jugadores: ',cantidadJugadores )
   const mitadDeJugadores = cantidadJugadores / 2
-  console.log('mitad de jugadores: ',mitadDeJugadores)
   const stepUno = jugadores.slice(0,mitadDeJugadores)
   const stepDos = jugadores.slice(mitadDeJugadores, cantidadJugadores)
-  console.log('step Uno:',stepUno)
-  console.log('step dos:', stepDos )
-
+ 
   let enganchados = [];
   if( stepUno > stepDos){
     for(let i=0; i < stepUno.length; i++){
@@ -60,7 +58,7 @@ const crearEnganchados = async () => {
       })
     }
   }
-  console.log('jugadores enganchados + ganadores: ', enganchados)
+  
   try {
     setEquipos(enganchados)    
      await crearPartidas(enganchados)
@@ -71,7 +69,6 @@ const crearEnganchados = async () => {
     console.log('No se pudo cargar al jugador')
    }
 }
-
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
@@ -100,6 +97,18 @@ if(jugadores.length % 2 !== 0) {
 
 }
 
+const anularPartidos = async () => {
+  console.log('click')
+  try {
+    console.log('click 2')
+    setEquipos([])
+    await borrarPartidas();
+    console.log('Partidas anuladas')
+    
+  } catch (error) {
+    console.log('no se pudo anular la partida')
+  }
+}
 const marcarGanador = async ({ ganadorId, perdedorId }) => {
   try {
     const nuevosEquipos = equipos.map((equipo) => {
@@ -155,7 +164,6 @@ const finalizarRonda = async () => {
     console.log('Error al borrar los equipos')
    }
 }
-
 
 const bloquearPartido = (partido) => {
   const inputs = document.querySelectorAll(`[name^="${partido}"]`)
@@ -293,7 +301,9 @@ return (
           title='Boton eliminar ronda'
           type='button'
           className='btn-reset-jugada'
-         
+          onClick={() => {
+            anularPartidos()
+          }}
         >
           Anular ronda
         </button>

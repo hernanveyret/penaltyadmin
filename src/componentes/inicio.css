@@ -90,11 +90,12 @@ main{
   padding:12px;
   border:none;
   border-radius:8px;
-  background:#14b8a6; /* verde/teal como te gusta */
+  background:#14b8a6; 
   color:white;
   font-size:14px;
   cursor:pointer;
   transition:0.2s;
+  text-shadow: 2px 2px 2px black;
 }
 
 .contenedorMenu button:hover{
@@ -112,6 +113,7 @@ main{
   cursor:pointer;
   transition:0.2s;
   align-items: stretch;
+  text-shadow: 2px 2px 2px black;
 }
 .contenedorMenu .btn-jugar {
   flex:1;
@@ -125,6 +127,7 @@ main{
   cursor:pointer;
   transition:0.2s;
   align-items: stretch;
+  text-shadow: 2px 2px 2px black;
 }
 .contenedorMenu .btn-jugar:hover {
   background-color:#115E2A ;
@@ -143,6 +146,11 @@ main{
     min-height: 56px;
   }
   h1 {
-    font-size: 25px !important;
+    font-size: 25px !important; 
   }
+  header {
+    justify-content: flex-start;
+  }
+
+
 }
