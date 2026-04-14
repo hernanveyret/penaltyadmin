@@ -69,28 +69,51 @@ const EditarDatosDeJugador = ( {  jugadores, editarJugador, isLoader, setIsLoade
   const [ apellido, setApellido ] = useState('');
   const [ posicion, setPosicion ] = useState('');
   const [ error, setError ] = useState(false);
+  const [ filtro, setFiltro ] = useState('')
   useEffect(() => {
-    id && console.log(id)
     nombre && console.log(nombre)
     apellido && console.log(apellido)
     posicion && console.log(posicion)
   },[nombre,apellido,posicion])
 
   useEffect(() => {
-    jugadores && console.log(jugadores)
+    if(jugadores ){
+      console.log(jugadores)
+      console.log(id)
+      const filtrar = jugadores.find(j => j.id === Number(id))
+      console.log(filtrar)
+      setNombre(filtrar.nombre)
+      setApellido(filtrar.apellido)
+      setPosicion(filtrar.posicion ? filtrar.posicion : '' )
+      setFiltro(filtrar)
+    }
   },[jugadores])
 
   const cargar = (e) => {
     e.preventDefault()
     console.log('cargar datos actualizados')
     setIsEdit(false)
+    setId('')
+
+    const datosEdit = {
+      id,
+      nombre,
+      apellido,
+      posicion,
+      estado: filtro.estado,
+    }
+    console.log(datosEdit)
   }
 
   return (
     <div className="contenedor-form-editar">
       <div className="formularioLogin">
         <button
-          onClick={() => setIsEdit(false)}
+          onClick={() => {
+            setId('')
+            setIsEdit(false)
+          }
+          }
         >X</button>
         { isLoader && <Loader /> }
           <h3>Editar datos de jugadores</h3>
