@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { borrarJugador } from '../firebase/auth.js';
+import { borrarJugador, editarJugador } from '../firebase/auth.js';
 import Loader from './Loader';
 import './listaJugadores.css'
 
 const ListaJugadores = ({ db, setDb }) => {
 const [ jugadores, setJugadores ] = useState([])
 const [ isLoader, setIsLoader ] = useState(false)
+const [ isEdit, setIsEdit ] = useState(false)
 const [ ConfirmBorrar, setIsConfirmBorrar ] = useState(false)
 const [ id, setId ] = useState('')
+
 
 useEffect(() => {
   setIsLoader(true)
@@ -62,8 +64,48 @@ const borrarJugadores = async (id) => {
   }
 }
 
-const editarJugador = (id) => {
-  console.log('Editar jugador: ', id)
+const EditarDatosDeJugador = ( {  jugadores, editarJugador, isLoader, setIsLoader, isEdit }) => {
+  const [ nombre, setNombre ] = useState('')
+  const [ apellido, setApellido ] = useState('');
+  const [ posicion, setPosicion ] = useState('');
+  const [ error, setError ] = useState(false);
+  useEffect(() => {
+    id && console.log(id)
+    nombre && console.log(nombre)
+    apellido && console.log(apellido)
+    posicion && console.log(posicion)
+  },[nombre,apellido,posicion])
+
+  useEffect(() => {
+    jugadores && console.log(jugadores)
+  },[jugadores])
+
+  const cargar = (e) => {
+    e.preventDefault()
+    console.log('cargar datos actualizados')
+    setIsEdit(false)
+  }
+
+  return (
+    <div className="contenedor-form-editar">
+      <div className="formularioLogin">
+        <button
+          onClick={() => setIsEdit(false)}
+        >X</button>
+        { isLoader && <Loader /> }
+          <h3>Editar datos de jugadores</h3>
+          <form
+            onSubmit={cargar}
+          >
+            <input  value={nombre} name='nombre' placeholder='Nombre' onChange={(e) => setNombre(e.target.value)}/>
+            <input  value={apellido} name='apellido' placeholder='Apellido' onChange={(e) => setApellido(e.target.value)}/>
+            <input  value={posicion} name='posicion' placeholder='Posicion' onChange={(e) => setPosicion(e.target.value)}/>
+            { error && <p className="error-numero">*Ingrese un numero valido</p>}
+            <button type='submit'>CARGAR</button>
+          </form>
+      </div>
+    </div>
+  )
 }
 
   return (
@@ -77,6 +119,17 @@ const editarJugador = (id) => {
             setIsConfirmBorrar={setIsConfirmBorrar}
           />
       }
+      {
+        isEdit && 
+          <EditarDatosDeJugador
+          jugadores={jugadores}
+          editarJugador={editarJugador}
+          isLoader={isLoader}
+          setIsLoader={setIsLoader}
+          id={id}
+          setId={setId}
+          />
+      }
       <h2>Lista de jugadores</h2>
       <div className="lista">
         { 
@@ -87,13 +140,17 @@ const editarJugador = (id) => {
                   <p>#{i+1}</p>
                    <p>{j.nombre ? j.nombre[0].toUpperCase() + j.nombre.slice(1) : ''}</p>
                   <p>{ j.apellido ? j.apellido[0].toUpperCase() + j.apellido.slice(1) : '' }</p>
+                  <p style={{color: 'orange'}}>P-{j.posicion}</p>
                 </div>                
                 <div className="nav-btn-lista">
                   <button
                     title='Editar'
                     type='button'
                     className='btn-lista-jugadores'
-                    onClick={() => editarJugador(j.id)}
+                    onClick={() => {
+                      setId(j.id)
+                      setIsEdit(true)
+                    }}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
                   </button>

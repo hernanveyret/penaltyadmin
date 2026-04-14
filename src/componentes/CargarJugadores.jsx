@@ -6,8 +6,19 @@ import './cargarJugadores.css'
 const CargarJugadores = ({ db, setDb}) => {
   const inputNombreRef = useRef(null);
   const [ nombre, setNombre ] = useState('')
-  const [ apellido, setApellido ] = useState('')
+  const [ apellido, setApellido ] = useState('');
+  const [ posicion, setPosicion ] = useState('');
+  const [ error, setError ] = useState(false);
   const [ isLoader, setIsLoader ] = useState(false);
+
+useEffect(() => {
+  if (isNaN(parseFloat(posicion))) {
+    setError(true)
+    setTimeout(() => {
+      setError(false)
+    },2000)   
+  }
+}, [posicion]);
   
 const cargar = async (e) => {
   e.preventDefault();
@@ -16,6 +27,7 @@ const cargar = async (e) => {
     id: Date.now(),
     nombre: (nombre || '').toLowerCase(),
     apellido: (apellido || '').toLowerCase(),
+    posicion: Number(posicion),
     estado:false
   };
 
@@ -34,6 +46,7 @@ const cargar = async (e) => {
    // Resetear formulario
   setNombre('');
   setApellido('');
+  setPosicion('')
    await agregarJugador(nuevoJugador)
    setIsLoader(false)
    inputNombreRef.current.focus()
@@ -51,7 +64,9 @@ const cargar = async (e) => {
           onSubmit={cargar}
         >
           <input  value={nombre}  ref={inputNombreRef} name='nombre' placeholder='Nombre' onChange={(e) => setNombre(e.target.value)}/>
-          <input   value={apellido}name='apellido' placeholder='Apellido' onChange={(e) => setApellido(e.target.value)}/>
+          <input  value={apellido}name='apellido' placeholder='Apellido' onChange={(e) => setApellido(e.target.value)}/>
+          <input  value={posicion}name='posicion' placeholder='Posicion' onChange={(e) => setPosicion(e.target.value)}/>
+          { error && <p className="error-numero">*Ingrese un numero valido</p>}
           <button type='submit'>CARGAR</button>
         </form>
     </div>

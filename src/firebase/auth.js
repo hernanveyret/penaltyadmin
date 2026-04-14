@@ -106,6 +106,18 @@ export const borrarJugador = async (update) => {
   }
 }
 
+export const editarJugador = async ( update ) => {
+ 
+  const docRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm')
+  try {
+    await setDoc(docRef, {
+            jugadores: update
+        }, { merge: true });
+    console.log('Jugador actualizado')
+  } catch (error) {
+    console.error('No se puedo actualizar.', error);
+  }
+}
 export const crearPartidas = async (nuevoPartida) => {
   const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
   try {
