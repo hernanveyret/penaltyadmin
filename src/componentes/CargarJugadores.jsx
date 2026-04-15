@@ -10,7 +10,7 @@ const CargarJugadores = ({ db, setDb}) => {
   const [ posicion, setPosicion ] = useState('');
   const [ error, setError ] = useState(false);
   const [ isLoader, setIsLoader ] = useState(false);
-
+/*
 useEffect(() => {
   if (isNaN(parseFloat(posicion))) {
     setError(true)
@@ -19,6 +19,11 @@ useEffect(() => {
     },2000)   
   }
 }, [posicion]);
+
+*/
+
+const errorPosicion =
+  posicion !== '' && (Number(posicion) < 1 || Number(posicion) > 64);
   
 const cargar = async (e) => {
   e.preventDefault();
@@ -65,8 +70,10 @@ const cargar = async (e) => {
         >
           <input  value={nombre}  ref={inputNombreRef} name='nombre' placeholder='Nombre' onChange={(e) => setNombre(e.target.value)}/>
           <input  value={apellido}name='apellido' placeholder='Apellido' onChange={(e) => setApellido(e.target.value)}/>
-          <input  value={posicion}name='posicion' placeholder='Posicion' onChange={(e) => setPosicion(e.target.value)}/>
-          { error && <p className="error-numero">*Ingrese un numero valido</p>}
+          <label className="input-numero"><input  type='number' min='1' max='64' value={posicion}name='posicion' placeholder='Posicion' onChange={(e) => setPosicion(e.target.value)}/><p>Posicion</p></label>
+          { errorPosicion && (
+            <p className="error-numero">Ingrese una posición válida</p>
+          )}
           <button type='submit'>CARGAR</button>
         </form>
     </div>

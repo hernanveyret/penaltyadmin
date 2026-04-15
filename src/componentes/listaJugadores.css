@@ -90,6 +90,18 @@
 .btn-confirm button:hover {
   background:#0d9488;
 }
+
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 @keyframes animacion {
   0% {
     transform: translateY(-100%);

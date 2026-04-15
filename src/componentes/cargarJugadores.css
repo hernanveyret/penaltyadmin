@@ -1,10 +1,29 @@
-.formularioLogin input:nth-child(3){
-  width: 60px;
-  text-align: center;
+.input-numero{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.input-numero p {
+  font-size: 14px;
+  color: grey;
 }
 .error-numero {
   color:rgb(247, 68, 68);
   font-size: 13px;
+}
+
+/* Chrome, Edge, Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  width:60px;
 }
 @media (max-width: 767px ) {  
   .formularioLogin {
