@@ -211,3 +211,18 @@ export const agregarRepechajes = async (  partido ) => {
   throw error
  }
 }
+
+export const borrarRepechajes = async () => {
+  const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
+  try {
+    await updateDoc(userDocRef, {
+      repechajes: []
+    });
+
+    //console.log('equipos borrados')
+
+  } catch (error) {
+    console.error('Error al borrar los repechajes: ', error);
+    throw error
+  }
+}

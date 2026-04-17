@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados, agregarRepechajes } from '../firebase/auth.js'
+import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados, agregarRepechajes, borrarRepechajes } from '../firebase/auth.js'
 import Loader from './Loader.jsx'
 import './jugar.css'
 
@@ -197,6 +197,7 @@ const finalizarRonda = async () => {
      await agregarPartidosFinalizados(equipos)
      await borrarPartidas()
      await borrarJugador(resetJugadores);
+     await borrarRepechajes();
      setIsLoader(false)
     // console.log('se borraron todos los equipos')
    } catch (error) {
@@ -426,7 +427,14 @@ return (
         onClick={finalizarRonda}
         >
         Finalizar ronda
-      </button>      
+      </button>
+      <button
+        type='button'
+        className='btn-reset-jugada'
+        onClick={() => borrarRepechajes()}
+      >
+          Anular repechajes
+      </button>   
     </div>
   </div>
 )
