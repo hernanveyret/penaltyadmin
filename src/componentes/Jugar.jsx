@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados } from '../firebase/auth.js'
+import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados, agregarRepechajes } from '../firebase/auth.js'
 import Loader from './Loader.jsx'
 import './jugar.css'
 
@@ -14,11 +14,13 @@ const [ ConfirmAnular, setIsConfirmAnular ] = useState(false)
 
 useEffect(() => {
   if(db){
-    const filtro = db[0]?.jugadores
-    setJugadores(filtro)
-    setEquipos(db[0]?.equipos)
+    setJugadores(db[0]?.jugadores)
+
+    if(db[0]?.equipos){
+      setEquipos(db[0]?.equipos)
+    }
+
     setJuegosFinalizados(db[0]?.partidosFinalizados || [])
-      
   }
 },[db])
 
@@ -66,21 +68,32 @@ const crearEnganchados = async () => {
    }
 }
 
+function mezclar(array) {
+  const copia = [...array]
+
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[copia[i], copia[j]] = [copia[j], copia[i]]
+  }
+
+  return copia
+}
+
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
 if(jugadores.length % 2 !== 0) {
   alert('Faltan jugadores');
   return
 }
-  const nuevosEquipos = []
 
-  for (let i = 0; i < jugadores.length; i += 2) {
+const jugadoresAleatorios = mezclar(jugadores)
+  const nuevosEquipos = []
+  for (let i = 0; i < jugadoresAleatorios.length; i += 2) {
     nuevosEquipos.push({
       partido: nuevosEquipos.length + 1,
-      jugadores: [jugadores[i], jugadores[i + 1]]
+      jugadores: [jugadoresAleatorios[i], jugadoresAleatorios[i + 1]]
     })
   }
-
   try {
     setEquipos(nuevosEquipos)    
      await crearPartidas(nuevosEquipos)
@@ -112,8 +125,7 @@ const ConfirmarAnularPartidos = ({setIsConfirmAnular }) => {
           onClick={() => { 
             const animacionCard = document.getElementById('card-in-out')
             animacionCard.classList.add('animacion-salida')
-            setTimeout(() => {
-              
+            setTimeout(() => {              
               setIsConfirmAnular(false);
             },50)          
           }}
@@ -136,6 +148,7 @@ const anularPartidos = async () => {
     console.log('no se pudo anular la partida')
   }
 }
+
 const marcarGanador = async ({ ganadorId, perdedorId }) => {
   try {
     const nuevosEquipos = equipos.map((equipo) => {
@@ -203,14 +216,77 @@ const bloquearPartido = (partido) => {
   }))
 }
 
+useEffect(() => {
+  jugadores && console.log(jugadores)
+},[jugadores])
+
+const generarNumeroRandom = (numero, veces) => {
+  let cantVeces = veces * 2
+  const indices = []
+  for(let i = 0; i < cantVeces; i++ ){
+    const numeroIndice = Math.floor(Math.random() * numero) + 1;
+    if(!indices.includes(numeroIndice)){
+        indices.push(numeroIndice)
+    }else{
+      console.log('repetido')
+     cantVeces = cantVeces + 1     
+    }
+  }
+  return indices
+}
+const crearRepechaje = async () => {
+/*
+  if(db){
+    const filtro = db[0]?.repechajes
+    console.log(filtro)
+    setEquipos(filtro)
+    return
+  }
+  */
+  let cantidadJugadores = prompt("Ingresá cuantos jugadores necesitas borrar");
+  let totalJugadores = prompt("Ingresá la cantidad de jugadores totales");
+  console.log(generarNumeroRandom(totalJugadores,cantidadJugadores))
+  const indices = generarNumeroRandom(totalJugadores,cantidadJugadores)
+  console.log('Indices: ',indices)
+  let filtro = []
+  for( let i = 0; i < indices.length; i++ ){
+    
+    const player = jugadores.find(j => j.posicion === indices[i])
+    filtro.push(player)
+  }
+  console.log(filtro)
+
+  const equiposRepechaje = []
+  for(let i=0; i < filtro.length; i+=2){
+      equiposRepechaje.push({
+        partido: i,
+        jugadores: [filtro[i], filtro[i+1]]
+      })
+    }
+    try {
+      await agregarRepechajes(equiposRepechaje)
+      setEquipos(equiposRepechaje)
+  } catch (error) {
+    console.log('No se guardaron los equipos para repechaje')
+  }
+}
 return (
   <div className="contenedor-jugar">
     { isLoader && <Loader /> }
     {  ConfirmAnular && <ConfirmarAnularPartidos setIsConfirmAnular={setIsConfirmAnular}/>  }
     <h2>JUGAR</h2>
-    { equipos.length > 8 
+    { 
+      equipos.length > 32 
       ?
-      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>ELIMINATORIAS</h3>
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>ELIMINATORIAS</h3> 
+      :
+      equipos.length === 32
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>32 AVOS</h3>
+      :
+      equipos.length === 16
+      ?
+      <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>16 AVOS</h3>
       :
       equipos.length === 8 
       ?
@@ -229,6 +305,13 @@ return (
       <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>FINAL</h3>
       : (
         <div className='nav-btn-crearPartidas'>
+      <button
+        type='button'
+        className='btn-repechaje'
+        onClick={() => crearRepechaje()}
+      >
+        Repechajes
+      </button>
       <button 
         title='Crear equipos'
         type='button'

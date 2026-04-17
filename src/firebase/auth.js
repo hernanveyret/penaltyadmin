@@ -86,7 +86,7 @@ export const agregarJugador = async (  nuevoJugador ) => {
   await updateDoc(userDocRef, {
     jugadores: arrayUnion(nuevoJugador)
   });
-  console.log('Producto agregado con exito')
+  //console.log('Jugador agregado con exito')
  } catch (error) {
   console.error('Error al cargar el producto: ', error);
   throw error
@@ -99,7 +99,7 @@ export const borrarJugador = async (update) => {
     await updateDoc(userDocRef, {
       jugadores: update
     });
-    console.log('Jugador borrado con exito')
+    //console.log('Jugador borrado con exito')
   } catch (error) {
     console.error('Error al borrar el jugador: ', error);
     throw error
@@ -119,12 +119,13 @@ export const editarJugador = async ( update ) => {
   }
 }
 export const crearPartidas = async (nuevoPartida) => {
+  console.log(nuevoPartida)
   const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
   try {
     await updateDoc(userDocRef, {
        equipos: arrayUnion(...JSON.parse(JSON.stringify(nuevoPartida)))
     });
-    console.log('equipos agregado con exito')
+    //console.log('equipos agregado con exito')
   } catch (error) {
     console.error('Error al cargar los equipos: ', error);
     throw error
@@ -138,7 +139,7 @@ export const borrarPartidas = async () => {
       equipos: []
     });
 
-    console.log('equipos borrados')
+    //console.log('equipos borrados')
 
   } catch (error) {
     console.error('Error al borrar los equipos: ', error);
@@ -153,7 +154,7 @@ export const borrarJuegosFinalizados = async () => {
       partidosFinalizados: []
     });
 
-    console.log('equipos borrados')
+    //console.log('equipos borrados')
 
   } catch (error) {
     console.error('Error al borrar los equipos: ', error);
@@ -167,7 +168,7 @@ export const checkGanador = async (update) => {
     await updateDoc(userDocRef, {
       equipos: update
     });
-    console.log('ganador marcado')
+    //console.log('ganador marcado')
   } catch (error) {
     console.error('Error al marcar el ganador: ', error);
     throw error
@@ -188,7 +189,23 @@ export const agregarPartidosFinalizados = async (  partido ) => {
   await updateDoc(userDocRef, {
     partidosFinalizados: arrayUnion(guardar)
   });
-  console.log('Producto agregado con exito')
+  //console.log('Producto agregado con exito')
+ } catch (error) {
+  console.error('Error al cargar el producto: ', error);
+  throw error
+ }
+}
+
+export const agregarRepechajes = async (  partido ) => {
+  console.log(partido)
+  // Crear una referencia del documento del usuario logueado.
+  const userDocRef = doc(db, 'torneos', 'SS194bqzsNqVQqyWZVPm');
+ try {
+ 
+  await updateDoc(userDocRef, {
+    repechajes: partido
+  });
+  //console.log('Producto agregado con exito')
  } catch (error) {
   console.error('Error al cargar el producto: ', error);
   throw error

@@ -41,7 +41,16 @@
   background: transparent;
   border: none;
 }
-
+.formularioLogin {
+  position:relative;
+}
+.btn-cerrar {
+  border: none;
+  background: transparent;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
 .contenedor-confir-borrar {
   position: fixed;
   width: 100%;
