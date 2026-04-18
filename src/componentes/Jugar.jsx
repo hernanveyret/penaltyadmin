@@ -86,12 +86,13 @@ if(jugadores.length % 2 !== 0) {
   return
 }
 
-const jugadoresAleatorios = mezclar(jugadores)
+//const jugadoresAleatorios = mezclar(jugadores)
+
   const nuevosEquipos = []
-  for (let i = 0; i < jugadoresAleatorios.length; i += 2) {
+  for (let i = 0; i < jugadores.length; i += 2) {
     nuevosEquipos.push({
       partido: nuevosEquipos.length + 1,
-      jugadores: [jugadoresAleatorios[i], jugadoresAleatorios[i + 1]]
+      jugadores: [jugadores[i], jugadores[i + 1]]
     })
   }
   try {
