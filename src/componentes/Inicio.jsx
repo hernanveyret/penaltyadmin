@@ -1,27 +1,151 @@
 import { useState, useEffect } from 'react';
-import { cerrarSesion, borrarJuegosFinalizados } from '../firebase/auth.js'
+import { cerrarSesion, borrarJuegosFinalizados, crearPartidas, agregarRepechajes } from '../firebase/auth.js'
 import CargarJugadores from './CargarJugadores';
 import ListaJugadores from './ListaJugadores.jsx';
 import PartidosTerminados from './PartidosTerminados.jsx';
+import Menu from './Menu.jsx';
 import './inicio.css';
 import Jugar from './Jugar.jsx';
 
-const Inicio = ({ db, setDb }) => {
-  const [ isCargarJugadores, setIsCargarJugadores ] = useState(true);
+const Inicio = ({ 
+      db, 
+      setDb, 
+      jugadores, 
+      setJugadores, 
+      juegosFinalizados, 
+      setJuegosFinalizados, 
+      equipos, 
+      setEquipos 
+    }) => {
+  const [ isCargarJugadores, setIsCargarJugadores ] = useState(false);
   const [ isListaDeJugadores, setIsListaDeJugadores ] = useState(false);
   const [ isJugar, setIsJugar ] = useState(false);
   const [ isPartidosterminados, setIsPartidosTerminados ] = useState(false);
+  const [ openMenu, setOpenMenu ] = useState(false);
+  const [ isLoader, setIsLoader ] = useState(false);
 
+  const crearEquipos = async () => {
+if(jugadores.length === 0) return
+if(jugadores.length % 2 !== 0) {
+  alert('Faltan jugadores');
+  return
+}
+
+//const jugadoresAleatorios = mezclar(jugadores)
+
+  const nuevosEquipos = []
+  for (let i = 0; i < jugadores.length; i += 2) {
+    nuevosEquipos.push({
+      partido: nuevosEquipos.length + 1,
+      jugadores: [jugadores[i], jugadores[i + 1]]
+    })
+  }
+  try {
+    setEquipos(nuevosEquipos)    
+     await crearPartidas(nuevosEquipos)
+     console.log('equipos cargados en la base de datos con exito')
+     setIsLoader(false)
+   } catch (error) {
+    setIsLoader(false)
+    console.log('No se pudo cargar al jugador')
+   }
+
+}
+
+const crearEnganchados = async () => {  
+  const cantidadJugadores = jugadores.length
+  const mitadDeJugadores = cantidadJugadores / 2
+  const stepUno = jugadores.slice(0,mitadDeJugadores)
+  const stepDos = jugadores.slice(mitadDeJugadores, cantidadJugadores)
+ 
+  let enganchados = [];
+  if( stepUno > stepDos){
+    for(let i=0; i < stepUno.length; i++){
+      enganchados.push({
+        partido: enganchados.length + 1,
+        jugadores: [stepUno[i], stepDos[i]]
+      })
+    }
+  }else{
+    for(let i=0; i < stepDos.length; i++){
+      enganchados.push({
+        partido: enganchados.length + 1,
+        jugadores: [stepUno[i], stepDos[i]]
+      })
+    }
+  }
+  
+  try {
+    setEquipos(enganchados)    
+     await crearPartidas(enganchados)
+     console.log('equipos cargados en la base de datos con exito')
+     setIsLoader(false)
+   } catch (error) {
+    setIsLoader(false)
+    console.log('No se pudo cargar al jugador')
+   }
+}
+
+const generarNumeroRandom = (numero, veces) => {
+  let cantVeces = veces * 2
+  const indices = []
+  for(let i = 0; i < cantVeces; i++ ){
+    const numeroIndice = Math.floor(Math.random() * numero) + 1;
+    if(!indices.includes(numeroIndice)){
+        indices.push(numeroIndice)
+    }else{
+      console.log('repetido')
+     cantVeces = cantVeces + 1     
+    }
+  }
+  return indices
+}
+
+const crearRepechaje = async () => {
+/*
+  if(db){
+    const filtro = db[0]?.repechajes
+    console.log(filtro)
+    setEquipos(filtro)
+    return
+  }
+  */
+  let cantidadJugadores = prompt("Ingresá cuantos jugadores necesitas borrar");
+  let totalJugadores = prompt("Ingresá la cantidad de jugadores totales");
+  console.log(generarNumeroRandom(totalJugadores,cantidadJugadores))
+  const indices = generarNumeroRandom(totalJugadores,cantidadJugadores)
+  console.log('Indices: ',indices)
+  let filtro = []
+  for( let i = 0; i < indices.length; i++ ){
+    filtro.push(jugadores[i])
+  }
+  console.log(filtro)
+
+  const equiposRepechaje = []
+  for(let i=0; i < filtro.length; i+=2){
+      equiposRepechaje.push({
+        partido: i,
+        jugadores: [filtro[i], filtro[i+1]]
+      })
+    }
+    try {
+      await agregarRepechajes(equiposRepechaje)
+      setEquipos(equiposRepechaje)
+  } catch (error) {
+    console.log('No se guardaron los equipos para repechaje')
+  }
+}
 
   
   return (
     <div className='inicio-contenedor'>
       <header>
         <h1>PENALES 11 FC</h1>
-        <div className="nav-config">
+        <div className="nav-menu">
           <button
             type='button'
-            className='btn-config'
+            className='btn-menu'
+            onClick={() => setOpenMenu((prev) => !prev)}
             >
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
@@ -29,7 +153,7 @@ const Inicio = ({ db, setDb }) => {
               viewBox="0 -960 960 960" 
               width="24px" 
               fill="#FFFFFF">
-                <path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Zm70-80h79l14-106q31-8 57.5-23.5T639-327l99 41 39-68-86-65q5-14 7-29.5t2-31.5q0-16-2-31.5t-7-29.5l86-65-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q22 23 48.5 38.5T427-266l13 106Zm42-180q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"/>
+                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
             </svg>
           </button>
           <button
@@ -49,6 +173,16 @@ const Inicio = ({ db, setDb }) => {
           </button>
         </div>
       </header>
+      <nav className='nav-menu-inicio'>
+        { openMenu && 
+          <Menu 
+            jugadores={jugadores}
+            crearEquipos={crearEquipos}
+            setOpenMenu={setOpenMenu}
+            crearEnganchados={crearEnganchados}
+            crearRepechaje={crearRepechaje}
+          /> }
+      </nav>
       <main>
         
           {
@@ -70,6 +204,12 @@ const Inicio = ({ db, setDb }) => {
               <Jugar 
                 db={db}
                 setDb={setDb}
+                jugadores={jugadores}
+                setJugadores={setJugadores}
+                equipos={equipos}
+                setEquipos={setEquipos}
+                setJuegosFinalizados={setJuegosFinalizados}
+                juegosFinalizados={juegosFinalizados}
               />
           }
           {

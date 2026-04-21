@@ -1,0 +1,30 @@
+.contenedor-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.contenedor-menu button {
+  padding: 5px;
+  background-color: olivedrab;
+  color: white;
+  text-shadow: 2px 2px 4px black;
+  border: none;
+  margin: 2px 0;
+}
+
+/* Modo movile */
+@media (max-width: 767px ) {
+  .contenedor-menu {
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    width: 100%;
+    gap: 0;
+  }
+  .contenedor-menu button {
+    width: 100%;
+    letter-spacing: 2px;
+  }
+}

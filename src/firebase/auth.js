@@ -10,7 +10,8 @@ import { collection,
          onSnapshot, 
          doc, 
          updateDoc, 
-         arrayUnion, 
+         arrayUnion,
+         setDoc,
          arrayRemove } from "firebase/firestore";
 
 import { auth, db, analytics } from "./config";

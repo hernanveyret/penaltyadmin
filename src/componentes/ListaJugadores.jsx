@@ -64,6 +64,7 @@ const borrarJugadores = async (id) => {
   }
 }
 
+// Componente con formulario para editar los datos del jugador. *****TERMINAR*****
 const EditarDatosDeJugador = ( {  jugadores, editarJugador, isLoader, setIsLoader, isEdit }) => {
   const [ nombre, setNombre ] = useState('')
   const [ apellido, setApellido ] = useState('');
@@ -174,7 +175,8 @@ const EditarDatosDeJugador = ( {  jugadores, editarJugador, isLoader, setIsLoade
                   <p>#{i+1}</p>
                    <p>{j.nombre ? j.nombre[0].toUpperCase() + j.nombre.slice(1) : ''}</p>
                   <p>{ j.apellido ? j.apellido[0].toUpperCase() + j.apellido.slice(1) : '' }</p>
-                  <p style={{color: 'orange'}}>P-{j.posicion}</p>
+                  
+                  { /* <p style={{color: 'orange'}}>P-{j.posicion}</p> */ }
                 </div>                
                 <div className="nav-btn-lista">
                   <button

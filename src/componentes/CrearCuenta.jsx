@@ -4,7 +4,8 @@ import './crearCuenta.css'
 
 const CrearCuenta = ({
   setIsCrearCuenta,
-  setIsLogin
+  setIsLogin,
+  jugadores
 }) =>  {
   const [ usuario, setUsuario ] = useState(null);
   const [ contraseña, setContraseña ] = useState(null);

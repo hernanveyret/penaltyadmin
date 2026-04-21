@@ -70,10 +70,9 @@ const cargar = async (e) => {
         >
           <input  value={nombre}  ref={inputNombreRef} name='nombre' placeholder='Nombre' onChange={(e) => setNombre(e.target.value)}/>
           <input  value={apellido}name='apellido' placeholder='Apellido' onChange={(e) => setApellido(e.target.value)}/>
-          <label className="input-numero"><input  type='number' min='1' max='64' value={posicion}name='posicion' onChange={(e) => setPosicion(e.target.value)}/><p>Posicion</p></label>
-          { errorPosicion && (
-            <p className="error-numero">Ingrese una posición válida</p>
-          )}
+
+          { /*<label className="input-numero"><input  type='number' min='1' max='64' value={posicion}name='posicion' onChange={(e) => setPosicion(e.target.value)}/><p>Posicion</p></label> */ }
+          { /* errorPosicion && (  <p className="error-numero">Ingrese una posición válida</p>   )   */ }
           <button type='submit'>CARGAR</button>
         </form>
     </div>

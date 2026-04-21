@@ -1,28 +1,22 @@
 import { useState, useEffect, useRef } from 'react'
-import { crearPartidas, borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados, agregarRepechajes, borrarRepechajes } from '../firebase/auth.js'
+import { borrarPartidas, checkGanador, borrarJugador, agregarPartidosFinalizados, borrarRepechajes } from '../firebase/auth.js'
 import Loader from './Loader.jsx'
 import './jugar.css'
 
-const Jugar = ({ db, setDb }) => {
-const [ jugadores, setJugadores ] = useState([])
-const [ equipos, setEquipos ] = useState(db[0]?.equipos ? db[0].equipos : [] )
-const [ isLoader, setIsLoader ] = useState(false)
-const [ juegosFinalizados, setJuegosFinalizados ] = useState(db[0]?.partidosFinalizados ? db[0]?.partidosFinalizados : []);
+const Jugar = ({ 
+        db, 
+        setDb, 
+        juegosFinalizados, 
+        setJuegosFinalizados, 
+        equipos, 
+        setEquipos,
+        jugadores,
+        setJugadores
+     }) => {
+const [ isLoader, setIsLoader ] = useState(false);
 const [ cantidadDePartidos, setCantidadDePartidos ] = useState({});
 const [ tituloEnganchados, setTituloEnganchados ] = useState('')
 const [ ConfirmAnular, setIsConfirmAnular ] = useState(false)
-
-useEffect(() => {
-  if(db){
-    setJugadores(db[0]?.jugadores)
-
-    if(db[0]?.equipos){
-      setEquipos(db[0]?.equipos)
-    }
-
-    setJuegosFinalizados(db[0]?.partidosFinalizados || [])
-  }
-},[db])
 
 useEffect(() => {
   if(db){
@@ -34,39 +28,7 @@ useEffect(() => {
   }
 },[])
 
-const crearEnganchados = async () => {  
-  const cantidadJugadores = jugadores.length
-  const mitadDeJugadores = cantidadJugadores / 2
-  const stepUno = jugadores.slice(0,mitadDeJugadores)
-  const stepDos = jugadores.slice(mitadDeJugadores, cantidadJugadores)
- 
-  let enganchados = [];
-  if( stepUno > stepDos){
-    for(let i=0; i < stepUno.length; i++){
-      enganchados.push({
-        partido: enganchados.length + 1,
-        jugadores: [stepUno[i], stepDos[i]]
-      })
-    }
-  }else{
-    for(let i=0; i < stepDos.length; i++){
-      enganchados.push({
-        partido: enganchados.length + 1,
-        jugadores: [stepUno[i], stepDos[i]]
-      })
-    }
-  }
-  
-  try {
-    setEquipos(enganchados)    
-     await crearPartidas(enganchados)
-     console.log('equipos cargados en la base de datos con exito')
-     setIsLoader(false)
-   } catch (error) {
-    setIsLoader(false)
-    console.log('No se pudo cargar al jugador')
-   }
-}
+
 
 function mezclar(array) {
   const copia = [...array]
@@ -79,33 +41,7 @@ function mezclar(array) {
   return copia
 }
 
-const crearEquipos = async () => {
-if(jugadores.length === 0) return
-if(jugadores.length % 2 !== 0) {
-  alert('Faltan jugadores');
-  return
-}
 
-//const jugadoresAleatorios = mezclar(jugadores)
-
-  const nuevosEquipos = []
-  for (let i = 0; i < jugadores.length; i += 2) {
-    nuevosEquipos.push({
-      partido: nuevosEquipos.length + 1,
-      jugadores: [jugadores[i], jugadores[i + 1]]
-    })
-  }
-  try {
-    setEquipos(nuevosEquipos)    
-     await crearPartidas(nuevosEquipos)
-     console.log('equipos cargados en la base de datos con exito')
-     setIsLoader(false)
-   } catch (error) {
-    setIsLoader(false)
-    console.log('No se pudo cargar al jugador')
-   }
-
-}
 
 const ConfirmarAnularPartidos = ({setIsConfirmAnular }) => {
   setTimeout(() => {
@@ -191,8 +127,10 @@ const finalizarRonda = async () => {
   
   setJuegosFinalizados(prev => [...prev, equipos]);
   setIsLoader(true)
-  const perdedores = equipos.flatMap(e => e.jugadores).filter(j => j.estado === false).map(j => j.id);  
+  const perdedores = equipos.flatMap(e => e.jugadores).filter(j => j.estado === false).map(j => j.id);
+  console.log('perdedores', perdedores)
   const resetJugadores = jugadores.filter(j => !perdedores.includes(j.id))
+  console.log('reset jugadores ', resetJugadores)
   try {
     setEquipos([])
      await agregarPartidosFinalizados(equipos)
@@ -218,60 +156,14 @@ const bloquearPartido = (partido) => {
   }))
 }
 
+
+
 useEffect(() => {
   jugadores && console.log(jugadores)
 },[jugadores])
 
-const generarNumeroRandom = (numero, veces) => {
-  let cantVeces = veces * 2
-  const indices = []
-  for(let i = 0; i < cantVeces; i++ ){
-    const numeroIndice = Math.floor(Math.random() * numero) + 1;
-    if(!indices.includes(numeroIndice)){
-        indices.push(numeroIndice)
-    }else{
-      console.log('repetido')
-     cantVeces = cantVeces + 1     
-    }
-  }
-  return indices
-}
-const crearRepechaje = async () => {
-/*
-  if(db){
-    const filtro = db[0]?.repechajes
-    console.log(filtro)
-    setEquipos(filtro)
-    return
-  }
-  */
-  let cantidadJugadores = prompt("Ingresá cuantos jugadores necesitas borrar");
-  let totalJugadores = prompt("Ingresá la cantidad de jugadores totales");
-  console.log(generarNumeroRandom(totalJugadores,cantidadJugadores))
-  const indices = generarNumeroRandom(totalJugadores,cantidadJugadores)
-  console.log('Indices: ',indices)
-  let filtro = []
-  for( let i = 0; i < indices.length; i++ ){
-    
-    const player = jugadores.find(j => j.posicion === indices[i])
-    filtro.push(player)
-  }
-  console.log(filtro)
 
-  const equiposRepechaje = []
-  for(let i=0; i < filtro.length; i+=2){
-      equiposRepechaje.push({
-        partido: i,
-        jugadores: [filtro[i], filtro[i+1]]
-      })
-    }
-    try {
-      await agregarRepechajes(equiposRepechaje)
-      setEquipos(equiposRepechaje)
-  } catch (error) {
-    console.log('No se guardaron los equipos para repechaje')
-  }
-}
+
 return (
   <div className="contenedor-jugar">
     { isLoader && <Loader /> }
@@ -307,31 +199,9 @@ return (
       <h3 style={{ color:'green', backgroundColor:'white', padding: '5px 30px', borderRadius: '5px', marginBottom: '10px'}}>FINAL</h3>
       : (
         <div className='nav-btn-crearPartidas'>
-      <button
-        type='button'
-        className='btn-repechaje'
-        onClick={() => crearRepechaje()}
-      >
-        Repechajes
-      </button>
-      <button 
-        title='Crear equipos'
-        type='button'
-        className='btn-crear-equipos'
-        onClick={crearEquipos}
-      >
-        Crear partidos
-      </button> 
-      <button
-        title='Crear Repechaje'
-        type='button'
-        className='btn-crear-equiposEnganchados'      
-        onClick={() => { 
-          crearEnganchados()
-        }}
-      >
-        Enganchados
-      </button>
+      
+      
+      
       </div>
       )
        

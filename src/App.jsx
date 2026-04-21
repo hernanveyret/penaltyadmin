@@ -14,6 +14,21 @@ function App() {
   const [ usuarioActual, setUsuarioActual ] = useState(null);
   const [ usuarioLogueado, setUsuarioLogueado ] = useState(null)
   const [ db, setDb ] = useState([])
+  const [ jugadores, setJugadores ] = useState([])
+  const [ juegosFinalizados, setJuegosFinalizados ] = useState(db[0]?.partidosFinalizados ? db[0]?.partidosFinalizados : []);
+  const [ equipos, setEquipos ] = useState(db[0]?.equipos ? db[0].equipos : [] )
+
+  useEffect(() => {
+  if(db){
+    setJugadores(db[0]?.jugadores)
+
+    if(db[0]?.equipos){
+      setEquipos(db[0]?.equipos)
+    }
+
+    setJuegosFinalizados(db[0]?.partidosFinalizados || [])
+  }
+},[db])
 
 useEffect(() => {
   let unsubscribeData = null;
@@ -53,7 +68,10 @@ useEffect(() => {
       { isCrearCuenta && 
         <CrearCuenta 
           setIsCrearCuenta={setIsCrearCuenta}
-          setIsLogin={setIsLogin} 
+          setIsLogin={setIsLogin}
+          jugadores={jugadores}
+          setJugadores={setJugadores}
+          
         />  
       }
       { isLogin && 
@@ -67,6 +85,12 @@ useEffect(() => {
           <Inicio 
             db={db}
             setDb={setDb}
+            jugadores={jugadores}
+            setJugadores={setJugadores}
+            juegosFinalizados={juegosFinalizados}
+            setJuegosFinalizados={setJuegosFinalizados}
+            equipos={equipos}
+            setEquipos={setEquipos}
           />
       }
     </div>

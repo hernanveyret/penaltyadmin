@@ -33,13 +33,13 @@ header{
   z-index: 999;
 }
 
-.nav-config {
+.nav-menu {
   display: flex;
   gap: 10px;
   position: absolute;
   right: 20px;
 }
-.btn-config, .btn-salir {
+.btn-menu, .btn-salir {
   background: transparent;
   border: none;
 }
@@ -48,6 +48,11 @@ header h1{
   letter-spacing:3px;
 }
 
+.nav-menu-inicio {
+  width: 100%;
+  position: sticky;
+  top: 40px;
+}
 /* MAIN */
 main{
   width: 100%;
@@ -135,6 +140,8 @@ main{
 .contenedorMenu .btn-resetJuego:hover {
   background:#b13232;  
 }
+
+/* Modo movile */
 @media (max-width: 767px ) {
   .inicio-contenedor {
     width: 100%;
