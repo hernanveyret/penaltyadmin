@@ -24,7 +24,7 @@ const Inicio = ({
   const [ openMenu, setOpenMenu ] = useState(false);
   const [ isLoader, setIsLoader ] = useState(false);
 
-  const crearEquipos = async () => {
+const crearEquipos = async () => {
 if(jugadores.length === 0) return
 if(jugadores.length % 2 !== 0) {
   alert('Faltan jugadores');
@@ -136,7 +136,6 @@ const crearRepechaje = async () => {
   }
 }
 
-  
   return (
     <div className='inicio-contenedor'>
       <header>
@@ -244,7 +243,7 @@ const crearRepechaje = async () => {
             </svg>
           </button>
 
-                 <button
+          <button
             title='Lista de jugadores'
             type='button'
             className='btn-juego'

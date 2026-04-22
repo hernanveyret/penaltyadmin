@@ -115,6 +115,22 @@ const marcarGanador = async ({ ganadorId, perdedorId }) => {
   }
 }
 
+const finalizarRepechajes = () => {
+  let perdedoresId = []
+  equipos.forEach(jugador => {
+    jugador.jugadores.forEach(p => {
+      if(!p.estado){
+        console.log(p.nombre)
+        perdedoresId.push(p.id)
+      }
+    })
+  })
+
+  console.log(perdedoresId)
+    const ganadores = jugadores.filter(j => !perdedoresId.includes(j.id));
+    console.log(ganadores)
+}
+
 const finalizarRonda = async () => {
 
   if(db){
@@ -155,8 +171,6 @@ const bloquearPartido = (partido) => {
     [partido]: !prev[partido]
   }))
 }
-
-
 
 useEffect(() => {
   jugadores && console.log(jugadores)
@@ -298,6 +312,14 @@ return (
         onClick={finalizarRonda}
         >
         Finalizar ronda
+      </button>
+      <button 
+        title='Finalizar partida'
+        type='button'
+        className='btn-crear-equipos'
+        onClick={finalizarRepechajes}
+        >
+        Finalizar repechaje
       </button>
       <button
         type='button'
