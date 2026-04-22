@@ -227,6 +227,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'
             onClick={() => {
+              setOpenMenu(false)
               setIsPartidosTerminados(false);
               setIsJugar(false)
               setIsListaDeJugadores(false);
@@ -248,6 +249,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'
             onClick={() => {
+              setOpenMenu(false)
               setIsPartidosTerminados(false);
               setIsJugar(false)
               setIsCargarJugadores(false);
@@ -269,6 +271,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-jugar'
             onClick={() => {
+              setOpenMenu(false)
               setIsPartidosTerminados(false);
               setIsListaDeJugadores(false);
               setIsCargarJugadores(false);
@@ -290,6 +293,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'
             onClick={() => {
+              setOpenMenu(false)
               setIsJugar(false)
               setIsListaDeJugadores(false);
               setIsCargarJugadores(false);
@@ -309,6 +313,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'      
             onClick={() => {
+              setOpenMenu(false)
               borrarJuegosFinalizados()
               db && console.log(db[0]?.partidosFinalizados)
             }}
