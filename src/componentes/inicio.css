@@ -89,7 +89,7 @@ main{
   scroll-behavior: smooth;
 }
 /* botones */
-.contenedorMenu button{
+.contenedorMenu .btn-juego{
   flex:1;
   margin:0 5px;
   padding:12px;
@@ -106,39 +106,19 @@ main{
 .contenedorMenu button:hover{
   background:#0d9488;
 }
-.contenedorMenu .btn-resetJuego {
-  flex:1;
-  margin:0 5px;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#ef4444;
-  color:white;
-  font-size:14px;
-  cursor:pointer;
-  transition:0.2s;
-  align-items: stretch;
-  text-shadow: 2px 2px 2px black;
-}
+
 .contenedorMenu .btn-jugar {
-  flex:1;
-  margin:0 5px;
-  padding:12px;
+  width: 60px !important;
+  height: 60px !important;
   border:none;
-  border-radius:8px;
-  background-color:#1D3B2E;
-  color:white;
+  border-radius:50%;
+  background:#155831; 
   font-size:14px;
   cursor:pointer;
   transition:0.2s;
-  align-items: stretch;
-  text-shadow: 2px 2px 2px black;
 }
 .contenedorMenu .btn-jugar:hover {
   background-color:#115E2A ;
-}
-.contenedorMenu .btn-resetJuego:hover {
-  background:#b13232;  
 }
 
 /* Modo movile */
