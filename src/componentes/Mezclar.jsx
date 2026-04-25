@@ -51,8 +51,10 @@ useEffect(() => {
         isMostrarAnimacion &&
           <MostrarNombres 
             setIsMostrarAnimacion={setIsMostrarAnimacion}
+            jugadores={jugadores}
           />
       }
+      <button onClick={() => setIsMostrarAnimacion(true)}>CLICK</button>
       <p><span>Todos </span><input type='checkbox' name='check' onChange={(e) => setCheck(e.target.checked)} /></p>
       { check === true ? '' : <p><span>O ingrese una cantidad: </span><input type='number' /></p>}
       { <p>{jugador ? '' : 'Sacudi el celular para comenzar'}</p>}

@@ -3,21 +3,20 @@ import './mostrarNombres.css';
 
 const MostrarNombres = ({
           setIsMostrarAnimacion,
+          jugadores,
 }) => {
 
   return (
     <div className="contenedor-mostrar-nombre">
-      <div className="cuadro nombre">        
+      <div className="cuadro-nombre">        
           <p>HERNAN VEYRET</p>        
       </div>
-      <div className="btn-cerrar">
-          <button
+      <button
             type='button'
             onClick={() => {
               setIsMostrarAnimacion(false);
             }}
           >X</button>
-        </div>
     </div>
   )
 }
