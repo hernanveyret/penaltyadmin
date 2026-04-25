@@ -7,29 +7,42 @@ const Menu = ({
   crearEnganchados,
   crearRepechaje,
   setOpenMenu,
+  setIsMezclar,
+  setIsListaDeJugadores,
+  setIsPartidosTerminados,
+  setIsJugar,
 }) => {
   return (
     <div className="contenedor-menu">      
         <button
           type='button'
-        >Mezclar jugadores</button>
+          onClick={crearRepechaje}
+        >Repechajes
+        </button>
         <button
           type='button'
           onClick={() => {
             crearEquipos();
             setOpenMenu(false);
           }} 
-        >Crear partidos</button>
-        <button
-          type='button'
-          onClick={crearRepechaje}
-        >Repechajes</button>
+        >Crear partidos
+        </button>
         <button
           type='button'
           onClick={() => { 
           crearEnganchados()
         }}
-        >Enganchados</button>      
+        >Enganchados
+        </button>
+        <button
+          type='button'
+          onClick={() => {
+            setIsListaDeJugadores(false);
+            setOpenMenu(false);
+            setIsMezclar(true)
+          }}
+        >Mezclar jugadores
+        </button>   
     </div>
   )
 }

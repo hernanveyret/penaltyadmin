@@ -3,6 +3,7 @@ import { cerrarSesion, borrarJuegosFinalizados, crearPartidas, agregarRepechajes
 import CargarJugadores from './CargarJugadores';
 import ListaJugadores from './ListaJugadores.jsx';
 import PartidosTerminados from './PartidosTerminados.jsx';
+import Mezclar from './Mezclar.jsx';
 import Menu from './Menu.jsx';
 import './inicio.css';
 import Jugar from './Jugar.jsx';
@@ -23,6 +24,11 @@ const Inicio = ({
   const [ isPartidosterminados, setIsPartidosTerminados ] = useState(false);
   const [ openMenu, setOpenMenu ] = useState(false);
   const [ isLoader, setIsLoader ] = useState(false);
+  const [ isMezclar, setIsMezclar ] = useState(false);
+
+function mezclarJugadores(array) {
+  
+}
 
 const crearEquipos = async () => {
 if(jugadores.length === 0) return
@@ -180,10 +186,20 @@ const crearRepechaje = async () => {
             setOpenMenu={setOpenMenu}
             crearEnganchados={crearEnganchados}
             crearRepechaje={crearRepechaje}
+            setIsMezclar={setIsMezclar}
+            setIsListaDeJugadores={setIsListaDeJugadores}
+            setIsJugar={setIsJugar}
+            setIsCargarJugadores={setIsCargarJugadores}
+            setIsPartidosTerminados={setIsPartidosTerminados}
           /> }
       </nav>
       <main>
-        
+          {
+            isMezclar &&
+              <Mezclar 
+                jugadores={jugadores}
+              />
+          }
           {
             isCargarJugadores &&
             <CargarJugadores 
@@ -226,6 +242,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'
             onClick={() => {
+              setIsMezclar(false);
               setOpenMenu(false)
               setIsPartidosTerminados(false);
               setIsJugar(false)
@@ -248,6 +265,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'
             onClick={() => {
+              setIsMezclar(false);
               setOpenMenu(false)
               setIsPartidosTerminados(false);
               setIsJugar(false)
@@ -270,6 +288,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-jugar'
             onClick={() => {
+              setIsMezclar(false);
               setOpenMenu(false)
               setIsPartidosTerminados(false);
               setIsListaDeJugadores(false);
@@ -292,6 +311,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'
             onClick={() => {
+              setIsMezclar(false);
               setOpenMenu(false)
               setIsJugar(false)
               setIsListaDeJugadores(false);
@@ -312,6 +332,7 @@ const crearRepechaje = async () => {
             type='button'
             className='btn-juego'      
             onClick={() => {
+              setIsMezclar(false);
               setOpenMenu(false)
               borrarJuegosFinalizados()
               db && console.log(db[0]?.partidosFinalizados)
