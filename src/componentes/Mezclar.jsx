@@ -26,28 +26,24 @@ useEffect(() => {
   console.log(check)
 },[check])
 
-export default function ShakeDetector() {
+useEffect(() => {
+  const handleMotion = (event) => {
+    const { x, y, z } = event.accelerationIncludingGravity || {};
 
-  useEffect(() => {
-    const handleMotion = (event) => {
-      const { x, y, z } = event.accelerationIncludingGravity || {};
+    const fuerza = Math.abs(x) + Math.abs(y) + Math.abs(z);
 
-      const fuerza = Math.abs(x) + Math.abs(y) + Math.abs(z);
+    if (fuerza > 30) {
+      console.log("Sacudiste el dispositivo!");
+      setIsMostrarAnimacion(true);
+    }
+  };
 
-      if (fuerza > 30) {
-        console.log("Sacudiste el dispositivo!");
-        setIsMostrarAnimacion(true)
-      }
-    };
+  window.addEventListener("devicemotion", handleMotion);
 
-    window.addEventListener("devicemotion", handleMotion);
-
-    return () => {
-      window.removeEventListener("devicemotion", handleMotion);
-    };
-  }, []);
-
-}
+  return () => {
+    window.removeEventListener("devicemotion", handleMotion);
+  };
+}, []);
 
   return (
     <div className="contenedor-mezclar">
