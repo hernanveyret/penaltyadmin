@@ -28,8 +28,6 @@ useEffect(() => {
   console.log(check)
 },[check])
 
-
-
 const mezclar = (cantidad) => {
    const index = Math.floor(Math.random() * cantidad);
    return index
@@ -44,8 +42,11 @@ useEffect(() => {
     
     if (fuerza > 40) {
       console.log("Sacudiste el dispositivo!");
-      setNumIndex(mezclar(jugadores.length))  
-      setIsMostrarAnimacion(true);
+      if(!repetidos.includes(mezclar(jugadores.length))){
+        repetidos.push(mezclar(jugadores.length))
+        setNumIndex(mezclar(jugadores.length))  
+        setIsMostrarAnimacion(true);
+      }
     }
   };
 
