@@ -9,6 +9,8 @@ const [ cantJugadores, setCantJugadores ] = useState(0);
 const [ check, setCheck ] = useState(false);
 const [ jugadoresSeleccionados, setJugadoresSeleccionados ] = useState([])
 const [ isMostrarAnimacion, setIsMostrarAnimacion ] = useState(false)
+const [ numIndex, setNumIndex ] = useState(0);
+const repetidos = []
 
 useEffect(() => {
   if(jugadores.length > 0){
@@ -32,8 +34,14 @@ useEffect(() => {
 
     const fuerza = Math.abs(x) + Math.abs(y) + Math.abs(z);
 
-    if (fuerza > 30) {
+    if (fuerza > 40) {
       console.log("Sacudiste el dispositivo!");
+      const index = Math.floor(Math.random() * (cantJugadores + 1));
+      console.log(index)
+      if(!repetidos.includes(index)){
+        repetidos.push(index)
+        setNumIndex(index)
+      }
       setIsMostrarAnimacion(true);
     }
   };
@@ -52,6 +60,7 @@ useEffect(() => {
           <MostrarNombres 
             setIsMostrarAnimacion={setIsMostrarAnimacion}
             jugadores={jugadores}
+            numIndex={numIndex}
           />
       }
       <button onClick={() => setIsMostrarAnimacion(true)}>CLICK</button>

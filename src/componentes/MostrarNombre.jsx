@@ -4,12 +4,13 @@ import './mostrarNombres.css';
 const MostrarNombres = ({
           setIsMostrarAnimacion,
           jugadores,
+          numIndex,
 }) => {
 
   return (
     <div className="contenedor-mostrar-nombre">
       <div className="cuadro-nombre">        
-          <p>HERNAN VEYRET</p>        
+          <p>{jugadores[numIndex].nombre}</p>        
       </div>
       <button
             type='button'
