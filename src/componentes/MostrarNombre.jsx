@@ -7,6 +7,8 @@ const MostrarNombres = ({
           numIndex,
 }) => {
 
+  console.log(numIndex)
+
   return (
     <div className="contenedor-mostrar-nombre">
       <div className="cuadro-nombre">        

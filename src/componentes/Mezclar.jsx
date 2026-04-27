@@ -17,31 +17,34 @@ useEffect(() => {
     setCantJugadores(jugadores.length)
   }
 },[jugadores])
-useEffect(() => {
-  jugadores && console.log(jugadores)
 
-})
+
 useEffect(() => {
   console.log(cantJugadores)
+  
 },[cantJugadores])
+
 useEffect(() => {
   console.log(check)
 },[check])
+
+
+
+const mezclar = (cantidad) => {
+   const index = Math.floor(Math.random() * cantidad);
+   return index
+}
+
 
 useEffect(() => {
   const handleMotion = (event) => {
     const { x, y, z } = event.accelerationIncludingGravity || {};
 
     const fuerza = Math.abs(x) + Math.abs(y) + Math.abs(z);
-
+    
     if (fuerza > 40) {
       console.log("Sacudiste el dispositivo!");
-      const index = Math.floor(Math.random() * (cantJugadores + 1));
-      console.log(index)
-      if(!repetidos.includes(index)){
-        repetidos.push(index)
-        setNumIndex(index)
-      }
+      setNumIndex(mezclar(jugadores.length))  
       setIsMostrarAnimacion(true);
     }
   };
