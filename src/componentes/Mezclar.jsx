@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MostrarNombres from './MostrarNombre';
 
 const Mezclar = ({
@@ -9,8 +9,8 @@ const [ cantJugadores, setCantJugadores ] = useState(0);
 const [ check, setCheck ] = useState(false);
 const [ jugadoresSeleccionados, setJugadoresSeleccionados ] = useState([])
 const [ isMostrarAnimacion, setIsMostrarAnimacion ] = useState(false)
-const [ numIndex, setNumIndex ] = useState(0);
-const repetidos = []
+const [ numIndex, setNumIndex ] = useState(null);
+const repetidos = useRef([])
 
 useEffect(() => {
   if(jugadores.length > 0){
@@ -18,19 +18,28 @@ useEffect(() => {
   }
 },[jugadores])
 
-
-useEffect(() => {
-  console.log(cantJugadores)
-  
-},[cantJugadores])
-
-useEffect(() => {
-  console.log(check)
-},[check])
-
 const mezclar = (cantidad) => {
    const index = Math.floor(Math.random() * cantidad);
    return index
+}
+
+const probar = () => {
+
+  if (repetidos.current.length === jugadores.length) {
+    console.log("ya salieron todos")
+    return
+  }
+
+  let index = mezclar(jugadores.length)
+  //Si se repite vuelve a buscar.
+  while (repetidos.current.includes(index)) {
+    index = mezclar(jugadores.length)
+  }
+  
+  repetidos.current.push(index)
+  setJugadoresSeleccionados((prev) => [...prev, jugadores[index] ])
+  setNumIndex(index)
+  setIsMostrarAnimacion(true)
 }
 
 
@@ -41,14 +50,23 @@ useEffect(() => {
     const fuerza = Math.abs(x) + Math.abs(y) + Math.abs(z);
     
     if (fuerza > 40) {
-      console.log("Sacudiste el dispositivo!");
-      if(!repetidos.includes(mezclar(jugadores.length))){
-        repetidos.push(mezclar(jugadores.length))
-        setNumIndex(mezclar(jugadores.length))  
-        setIsMostrarAnimacion(true);
+     if (repetidos.current.length === jugadores.length) {
+        console.log("ya salieron todos")
+        return
       }
-    }
-  };
+    
+      let index = mezclar(jugadores.length)
+      //Si se repite vuelve a buscar.
+      while (repetidos.current.includes(index)) {
+        index = mezclar(jugadores.length)
+      }
+
+      repetidos.current.push(index)
+      setJugadoresSeleccionados((prev) => [...prev, jugadores[index] ])
+      setNumIndex(index)
+      setIsMostrarAnimacion(true)
+        }
+      };
 
   window.addEventListener("devicemotion", handleMotion);
 
@@ -56,6 +74,7 @@ useEffect(() => {
     window.removeEventListener("devicemotion", handleMotion);
   };
 }, []);
+
 
   return (
     <div className="contenedor-mezclar">
@@ -65,19 +84,28 @@ useEffect(() => {
             setIsMostrarAnimacion={setIsMostrarAnimacion}
             jugadores={jugadores}
             numIndex={numIndex}
+            setNumIndex={setNumIndex}
           />
       }
-      <button onClick={() => setIsMostrarAnimacion(true)}>CLICK</button>
+      <button onClick={() => {
+        probar()
+        //setIsMostrarAnimacion(true)
+        }}>CLICK</button>
       <p><span>Todos </span><input type='checkbox' name='check' onChange={(e) => setCheck(e.target.checked)} /></p>
       { check === true ? '' : <p><span>O ingrese una cantidad: </span><input type='number' /></p>}
       { <p>{jugador ? '' : 'Sacudi el celular para comenzar'}</p>}
-       { 
-        jugadoresSeleccionados.length > 0
-          ?
-            <p>Hay { jugadoresSeleccionados.length } seleccionados</p>
-          :
-          <p>No hay jugadores seleccionados</p>
-       }
+      { jugadoresSeleccionados.length > 0 &&
+         jugadoresSeleccionados.map((j, i )=> (         
+          <p key={j.id} style={{color:'orangered'}}>#{i+1}-{j.nombre[0].toUpperCase() + j.nombre.slice(1) }</p>         
+          ))          
+      }
+      {
+        <p>{
+          jugadoresSeleccionados.length > 0  &&
+            jugadoresSeleccionados.length === jugadores.length && 'No hay mas Jugadores para sortear...'
+
+          }</p>
+      }
     </div>
   )
 }

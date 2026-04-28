@@ -5,18 +5,18 @@ const MostrarNombres = ({
           setIsMostrarAnimacion,
           jugadores,
           numIndex,
+          setNumIndex,
 }) => {
-
-  console.log(numIndex)
 
   return (
     <div className="contenedor-mostrar-nombre">
       <div className="cuadro-nombre">        
-          <p>{jugadores[numIndex].nombre}</p>        
+          <p>{numIndex !== null ? jugadores[numIndex].nombre : ''}</p>
       </div>
       <button
             type='button'
             onClick={() => {
+              setNumIndex(null)
               setIsMostrarAnimacion(false);
             }}
           >X</button>
