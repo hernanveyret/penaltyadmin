@@ -49,7 +49,7 @@ useEffect(() => {
 
     const fuerza = Math.abs(x) + Math.abs(y) + Math.abs(z);
     
-    if (fuerza > 40) {
+    if (fuerza > 65) {
      if (repetidos.current.length === jugadores.length) {
         console.log("ya salieron todos")
         return
